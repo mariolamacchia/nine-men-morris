@@ -778,6 +778,7 @@ int Controlla_Impostazioni (impostazioni Imp)
         err_numero_pedine = 0,
         err_giocatore_iniziale = 0,
         err_colori = 0,
+        err_suoni = 0,
         err_spazi = 0;
     float max_pedine;
     impostazioni_giocatore * giocatore;
@@ -827,13 +828,14 @@ int Controlla_Impostazioni (impostazioni Imp)
         (Imp.spazio_righe < 0 || Imp.spazio_righe > MAX_SPAZIO_RIGHE))
         err_spazi = 1;
     {
-        err_spazi = 1
+        err_spazi = 1;
     }
     if (err_numero_giocatori ||
         err_nome_partita ||
         err_grandezza_campo ||
         err_numero_pedine ||
         err_giocatore_iniziale ||
+        err_suoni ||
         err_colori ||
         err_spazi)
     {
@@ -925,7 +927,7 @@ void Crea_Campo (campo * Campo, int quadrati)
         offset = dimensioni / 2 * dimensioni + i;
         *(Campo->caselle + offset) = 0;
         offset = dimensioni / 2 * dimensioni + dimensioni - 1 - i;
-        *(Campo->caselle + ) = 0;
+        *(Campo->caselle + offset) = 0;
 
         //prima metà
         caselle = quadrati/2;
