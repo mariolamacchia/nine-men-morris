@@ -27,27 +27,27 @@ int main()
         scelta = Scelta_Menu(&cursore);
         switch (scelta)
         {
-        case MP_VNUOVA:
-            Gestione_Errori(Nuova_Partita(&Imp, &Partita));
-            break;
-        case MP_VCARICA:
-            Gestione_Errori(Carica_Partita(&Partita, Imp));
-            break;
-        case MP_VSALVA:
-            Gestione_Errori(Salva_Partita(&Partita));
-            break;
-        case MP_VIMP:
-            Gestione_Errori(Impostazioni(&Imp));
-            break;
-        case MP_VRECORD:
-            Gestione_Errori(Record());
-            break;
-        case MP_VAIUTO:
-            Gestione_Errori(Aiuto());
-            break;
-        case 0:
-            esci = Esci();
-            break;
+            case MP_VNUOVA:
+                Gestione_Errori(Nuova_Partita(&Imp, &Partita));
+                break;
+            case MP_VCARICA:
+                Gestione_Errori(Carica_Partita(&Partita, Imp));
+                break;
+            case MP_VSALVA:
+                Gestione_Errori(Salva_Partita(&Partita));
+                break;
+            case MP_VIMP:
+                Gestione_Errori(Impostazioni(&Imp));
+                break;
+            case MP_VRECORD:
+                Gestione_Errori(Record());
+                break;
+            case MP_VAIUTO:
+                Gestione_Errori(Aiuto());
+                break;
+            case 0:
+                esci = Esci();
+                break;
         }
     }
 

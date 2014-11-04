@@ -244,52 +244,71 @@ booleano Messaggio(char * messaggio, booleano conferma);
 void Stampa_Menu(int cursore);
 int Scelta_Menu(int * cursore);
 int Nuova_Partita(impostazioni * Imp, partita * Partita);
-    int Controlla_Impostazioni (impostazioni Imp);
-    void Inizializza_Partita (impostazioni Imp, partita * game);
-    void Crea_Campo(campo * Campo, int quadrati);
-    void Crea_Buffer_Campo (buffer_campo ** buffer, campo Campo, int spazio_righe, int spazio_colonne);
-    void Stampa_Buffer_Campo (buffer_campo * buffer, int top, int left, int width, int height, casella_selezionata cursore, casella_selezionata pedina_da_spostare, partita Partita, impostazioni Imp);
-    void Stampa_Finestra_Punteggi (int left, int top, int width, int height, partita Partita, impostazioni Imp);
-    void Stampa_Finestra_Pedine (int left, int top, int width, int height, partita Partita, impostazioni Imp);
-    void Stampa_Coordinate (int left, int top, int width, int height, int grandezza, impostazioni Imp, casella_selezionata cursore);
-    void Stampa_Menu_Gioco (partita Partita, impostazioni Imp);
-    void Stampa_Schermata (buffer_campo * buffer, partita Partita, impostazioni Imp, casella_selezionata cursore_casella, casella_selezionata pedina_da_spostare);
-    casella_selezionata Casella_Adiacente (casella_selezionata Casella, direzione Direzione, campo Campo);
-    int Valore_Casella (casella_selezionata Casella, campo Campo);
-    void Setta_Valore (casella_selezionata Casella, campo Campo, casella valore);
-    booleano Stessa_Linea (casella_selezionata Casella1, casella_selezionata Casella2, campo Campo);
-    booleano Mulino (casella_selezionata Casella, campo Campo);
-    booleano Stessa_Casella (casella_selezionata Casella1, casella_selezionata Casella2);
-    casella_selezionata Casella_Selezionata(int x, int y);
-    booleano Adiacente(casella_selezionata Casella1, casella_selezionata Casella, campo Campo);
-    int Inserisci_Pedina (casella_selezionata Casella, partita * Partita);
-    int Sposta_Pedina (casella_selezionata Sorgente, casella_selezionata Destinazione, partita * Partita);
-    int Elimina_Pedina (casella_selezionata Casella, partita * Partita);
+int Controlla_Impostazioni (impostazioni Imp);
+void Inizializza_Partita (impostazioni Imp, partita * game);
+void Crea_Campo(campo * Campo, int quadrati);
+void Crea_Buffer_Campo (buffer_campo ** buffer, campo Campo,
+        int spazio_righe, int spazio_colonne);
+void Stampa_Buffer_Campo (buffer_campo * buffer,
+                          int top, int left, int width, int height,
+                          casella_selezionata cursore,
+                          casella_selezionata pedina_da_spostare,
+                          partita Partita, impostazioni Imp);
+void Stampa_Finestra_Punteggi (int left, int top, int width, int height,
+                               partita Partita, impostazioni Imp);
+void Stampa_Finestra_Pedine (int left, int top, int width, int height,
+                             partita Partita, impostazioni Imp);
+void Stampa_Coordinate (int left, int top, int width, int height,
+                        int grandezza, impostazioni Imp,
+                        casella_selezionata cursore);
+void Stampa_Menu_Gioco (partita Partita, impostazioni Imp);
+void Stampa_Schermata (buffer_campo * buffer, partita Partita,
+                       impostazioni Imp, casella_selezionata cursore_casella,
+                       casella_selezionata pedina_da_spostare);
+casella_selezionata Casella_Adiacente (casella_selezionata Casella,
+                                       direzione Direzione, campo Campo);
+int Valore_Casella (casella_selezionata Casella, campo Campo);
+void Setta_Valore (casella_selezionata Casella, campo Campo, casella valore);
+booleano Stessa_Linea (casella_selezionata Casella1,
+                       casella_selezionata Casella2, campo Campo);
+booleano Mulino (casella_selezionata Casella, campo Campo);
+booleano Stessa_Casella (casella_selezionata Casella1,
+                         casella_selezionata Casella2);
+casella_selezionata Casella_Selezionata(int x, int y);
+booleano Adiacente(casella_selezionata Casella1, casella_selezionata Casella,
+                   campo Campo);
+int Inserisci_Pedina (casella_selezionata Casella, partita * Partita);
+int Sposta_Pedina (casella_selezionata Sorgente,
+                   casella_selezionata Destinazione,
+                   partita * Partita);
+int Elimina_Pedina (casella_selezionata Casella, partita * Partita);
 
-    int Scelta_Casella(casella_selezionata * cursore, partita * Partita);
+int Scelta_Casella(casella_selezionata * cursore, partita * Partita);
 
-    giocatore * Prossimo_Turno (partita * Partita);
-    int Gioca(partita * Partita, impostazioni Imp);
-    int Fase_Posizionamento (partita * Partita, impostazioni Imp);
-    int Fase_Spostamento (partita * Partita, impostazioni Imp);
-    int Vittoria (short_string Nome, float punteggio);
-    booleano Pedina_Bloccata (casella_selezionata Casella, campo Campo);
-    booleano Giocatore_Eliminato(partita Partita, int giocatore);
-    booleano Fine_Partita (partita Partita);
+giocatore * Prossimo_Turno (partita * Partita);
+int Gioca(partita * Partita, impostazioni Imp);
+int Fase_Posizionamento (partita * Partita, impostazioni Imp);
+int Fase_Spostamento (partita * Partita, impostazioni Imp);
+int Vittoria (short_string Nome, float punteggio);
+booleano Pedina_Bloccata (casella_selezionata Casella, campo Campo);
+booleano Giocatore_Eliminato(partita Partita, int giocatore);
+booleano Fine_Partita (partita Partita);
 int Carica_Partita(partita * Partita, impostazioni Imp);
 int Salva_Partita(partita * Partita);
-    void Stampa_Menu_Lista(int cursore, lista_stringhe lista_nomi, int colore);
-    int Leggi_Nomi_Partite (lista_stringhe * lista_nomi);
-    int Scelta_Menu_Lista(int * cursore, int numero_voci);
+void Stampa_Menu_Lista(int cursore, lista_stringhe lista_nomi, int colore);
+int Leggi_Nomi_Partite (lista_stringhe * lista_nomi);
+int Scelta_Menu_Lista(int * cursore, int numero_voci);
 int Impostazioni(impostazioni * Imp);
-    void Crea_Lista_Impostazioni (impostazioni, lista_stringhe * lista_nomi, lista_stringhe * lista_valori);
-    void Stampa_Menu_Impostazioni (int cursore, lista_stringhe lista_nomi, lista_stringhe lista_valori, int colore);
-    int Cambia_Impostazione (impostazioni * Imp, int indice, int valore);
-    void Leggi_Valore_Stringa (char * valore);
-    int Cambia_Impostazioni_Giocatori (impostazioni * Imp);
-    void Impostazioni_Predefinite (impostazioni * Imp);
-    void Colore_To_String (short_string stringa, int colore);
-    char Pedina_To_Char (int pedina);
+void Crea_Lista_Impostazioni (impostazioni, lista_stringhe * lista_nomi,
+                              lista_stringhe * lista_valori);
+void Stampa_Menu_Impostazioni (int cursore, lista_stringhe lista_nomi,
+                               lista_stringhe lista_valori, int colore);
+int Cambia_Impostazione (impostazioni * Imp, int indice, int valore);
+void Leggi_Valore_Stringa (char * valore);
+int Cambia_Impostazioni_Giocatori (impostazioni * Imp);
+void Impostazioni_Predefinite (impostazioni * Imp);
+void Colore_To_String (short_string stringa, int colore);
+char Pedina_To_Char (int pedina);
 int Record();
 int Aiuto();
 void Gestione_Errori(int errore);

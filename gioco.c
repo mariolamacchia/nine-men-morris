@@ -17,10 +17,10 @@
 
 void gotoxy(int x, int y)
 {
-  COORD coord;
-  coord.X = x;
-  coord.Y = y;
-  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    COORD coord;
+    coord.X = x;
+    coord.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
 void Cambia_Colore (int colore, int sfondo)
@@ -62,8 +62,12 @@ void Inizializza_Gioco(partita * Partita, impostazioni * Imp)
             errore_imp = 0;
             //leggi impostazioni
             fread(Imp,1,sizeof(impostazioni),file_impostazioni);
-            //verifica che il dato letto corrispona in grandezza a quello previsto
-            if (feof(file_impostazioni) || fine_file-ftell(file_impostazioni)!=Imp->numero_giocatori * sizeof(impostazioni_giocatore))
+            /* verifica che il dato letto corrispona
+               in grandezza a quello previsto */
+            if (feof(file_impostazioni) ||
+                fine_file-ftell(file_impostazioni) !=
+                    Imp->numero_giocatori * sizeof(impostazioni_giocatore)
+                )
             {
                 errore_imp = ERR_FILE_IMP_INVALID;
             }
@@ -75,15 +79,20 @@ void Inizializza_Gioco(partita * Partita, impostazioni * Imp)
                 {
                     if (Imp->giocatori == NULL)
                     {
-                        Imp->giocatori = malloc(sizeof(impostazioni_giocatore));
+                        Imp->giocatori =
+                            malloc(sizeof(impostazioni_giocatore));
                         puntatore = Imp->giocatori;
                     }
                     else
                     {
-                        puntatore->prossimo = malloc(sizeof(impostazioni_giocatore));
+                        puntatore->prossimo =
+                            malloc(sizeof(impostazioni_giocatore));
                         puntatore = puntatore->prossimo;
                     }
-                    fread(puntatore,1,sizeof(impostazioni_giocatore),file_impostazioni);
+                    fread(puntatore,
+                          1,
+                          sizeof(impostazioni_giocatore),
+                          file_impostazioni);
                 }
             }
         }
@@ -97,7 +106,8 @@ void Inizializza_Gioco(partita * Partita, impostazioni * Imp)
     {
         errore_imp = ERR_FILE_IMP_INESISTENTE;
     }
-    //nel caso siano stati riscontrati errori si applicano le impostazioni predefinite
+    /* nel caso siano stati riscontrati errori
+       si applicano le impostazioni predefinite */
     if (errore_imp)
     {
         Gestione_Errori(errore_imp);
@@ -107,7 +117,10 @@ void Inizializza_Gioco(partita * Partita, impostazioni * Imp)
         puntatore = Imp->giocatori;
         for (i=0;i<Imp->numero_giocatori;i++)
         {
-            fwrite(puntatore,1,sizeof(impostazioni_giocatore),file_impostazioni);
+            fwrite(puntatore,
+                   1,
+                   sizeof(impostazioni_giocatore),
+                   file_impostazioni);
             puntatore=puntatore->prossimo;
         }
         fclose(file_impostazioni);
@@ -338,7 +351,7 @@ void Stampa_Indicatori_Pagina (int pagina, int numero_pagine, int colore)
         }
     }
     else
-    //cancella indicatore pagina giù se non richiesto
+        //cancella indicatore pagina giù se non richiesto
     {
         for (i=0;i<2;i++)
         {
@@ -358,7 +371,7 @@ void Stampa_Indicatori_Pagina (int pagina, int numero_pagine, int colore)
         }
     }
     else
-    //cancella se non richiesto
+        //cancella se non richiesto
     {
         for (i=0;i<2;i++)
         {
@@ -379,7 +392,8 @@ void Stampa_Cursore(int cursore, int colore, booleano doppio)
     //stampa la freccia al contrario se richiesta
     if (doppio)
     {
-        gotoxy(TESTO_X+BUFFER_TESTO_X-3-MARGINE_CURSORE, TESTO_Y+cursore%BUFFER_TESTO_Y);
+        gotoxy(TESTO_X+BUFFER_TESTO_X-3-MARGINE_CURSORE,
+               TESTO_Y+cursore%BUFFER_TESTO_Y);
         printf("<--");
     }
 
@@ -391,105 +405,105 @@ void Riproduci_Suono(int suono)
 {
     switch (suono)
     {
-    case 0:
-        Beep(700,100);
-        Beep(520,100);
-        break;
-    case 1:
-        Beep(520,100);
-        Beep(700,100);
-        break;
-    case 2:
-        Beep(520,100);
-        break;
-    case 3:
-        Beep(700,100);
-        Beep(700,100);
-        break;
-    case 4:
-        Beep(700,100);
-        Beep(700,100);
-        Beep(700,100);
-        break;
-    case 5:
-        Beep(520,70);
-        Beep(700,70);
-        Beep(520,70);
-        break;
-    case 6:
-        Beep(660,100);
-        Beep(700,100);
-        break;
-    case 7:
-        Beep(700,100);
-        Beep(660,100);
-        break;
-    case 8:
-        Beep(520,30);
-        Beep(580,30);
-        Beep(660,30);
-        Beep(700,30);
-        Beep(780,30);
-        break;
-    case 9:
-        Beep(780,30);
-        Beep(700,30);
-        Beep(660,30);
-        Beep(580,30);
-        Beep(520,30);
-        break;
-    case 10:
-        Beep(660,200);
-        Beep(520,200);
-        Beep(390,200);
-        Beep(660,400);
-        break;
-    case 11:
-        Beep(660,100);
-        Beep(620,100);
-        Beep(660,100);
-        Beep(780,100);
-        Sleep(200);
-        Beep(880,100);
-        Beep(780,100);
-        Sleep(100);
-        Beep(660,400);
-        break;
-    case 12:
-        Beep(520,100);
-        Beep(520,100);
-        Beep(520,100);
-        Sleep(200);
-        Beep(1040,200);
-        Beep(880,300);
-        break;
-    case 13:
-        Beep(520,300);
-        Beep(495,300);
-        Beep(470,300);
-        Beep(440,600);
-        break;
-    case 14:
-        Beep(520,100);
-        Beep(580,100);
-        Beep(660,100);
-        Beep(780,200);
-        Sleep(200);
-        Beep(660,100);
-        Beep(780,400);
-        break;
-    case 15:
-        Beep(700,100);
-        Sleep(100);
-        Beep(520,100);
-        Beep(520,100);
-        Beep(580,100);
-        Sleep(200);
-        Beep(520,200);
-        Sleep(200);
-        Beep(660,200);
-        Beep(700,200);
-        break;
+        case 0:
+            Beep(700,100);
+            Beep(520,100);
+            break;
+        case 1:
+            Beep(520,100);
+            Beep(700,100);
+            break;
+        case 2:
+            Beep(520,100);
+            break;
+        case 3:
+            Beep(700,100);
+            Beep(700,100);
+            break;
+        case 4:
+            Beep(700,100);
+            Beep(700,100);
+            Beep(700,100);
+            break;
+        case 5:
+            Beep(520,70);
+            Beep(700,70);
+            Beep(520,70);
+            break;
+        case 6:
+            Beep(660,100);
+            Beep(700,100);
+            break;
+        case 7:
+            Beep(700,100);
+            Beep(660,100);
+            break;
+        case 8:
+            Beep(520,30);
+            Beep(580,30);
+            Beep(660,30);
+            Beep(700,30);
+            Beep(780,30);
+            break;
+        case 9:
+            Beep(780,30);
+            Beep(700,30);
+            Beep(660,30);
+            Beep(580,30);
+            Beep(520,30);
+            break;
+        case 10:
+            Beep(660,200);
+            Beep(520,200);
+            Beep(390,200);
+            Beep(660,400);
+            break;
+        case 11:
+            Beep(660,100);
+            Beep(620,100);
+            Beep(660,100);
+            Beep(780,100);
+            Sleep(200);
+            Beep(880,100);
+            Beep(780,100);
+            Sleep(100);
+            Beep(660,400);
+            break;
+        case 12:
+            Beep(520,100);
+            Beep(520,100);
+            Beep(520,100);
+            Sleep(200);
+            Beep(1040,200);
+            Beep(880,300);
+            break;
+        case 13:
+            Beep(520,300);
+            Beep(495,300);
+            Beep(470,300);
+            Beep(440,600);
+            break;
+        case 14:
+            Beep(520,100);
+            Beep(580,100);
+            Beep(660,100);
+            Beep(780,200);
+            Sleep(200);
+            Beep(660,100);
+            Beep(780,400);
+            break;
+        case 15:
+            Beep(700,100);
+            Sleep(100);
+            Beep(520,100);
+            Beep(520,100);
+            Beep(580,100);
+            Sleep(200);
+            Beep(520,200);
+            Sleep(200);
+            Beep(660,200);
+            Beep(700,200);
+            break;
     }
 }
 
@@ -549,8 +563,9 @@ booleano Messaggio(char * messaggio, booleano conferma)
     gotoxy(MEX_X,MEX_Y+(y++));
     for (i=0; i<strlen(temp); i++)
     {
-        /*se il contatore ha raggiunto un multiplo della larghezza dello schermo
-        si va a capo, a meno che il carattere letto al momento non sia di newline */
+        /*se il contatore ha raggiunto un multiplo della larghezza dello
+          schermo si va a capo, a meno che il carattere letto al momento
+          non sia di newline */
         if (x==MEX_WIDTH && temp[i]!='\n')
         {
             gotoxy(MEX_X,MEX_Y+(y++));
@@ -586,7 +601,7 @@ booleano Messaggio(char * messaggio, booleano conferma)
     free(temp);
 
     if (c=='s' || c=='S') return true;
-        else return false;
+    else return false;
 }
 
 void Stampa_Menu(int cursore)
@@ -662,7 +677,10 @@ void Stampa_Menu(int cursore)
 
     i=0;
 
-    Stampa_Indicazioni("Premere le frecce su e gi\x97 per muoversi nel menu e \nINVIO nel per confermare la selezione oppure premere\nsemplicemente il tasto corrispondente alla scelta\ndesiderata.");
+    Stampa_Indicazioni("Premere le frecce su e gi\x97 per muoversi nel menu e"
+                       "\nINVIO nel per confermare la selezione oppure premere"
+                       "\nsemplicemente il tasto corrispondente alla scelta"
+                       "\ndesiderata.");
 
     Cambia_Colore(DEF_COLOR,DEF_BACK_COLOR);
 }
@@ -675,63 +693,66 @@ int Scelta_Menu(int * cursore)
     scelta = getch();
     switch (scelta)
     {
-    case ARROW:
-        scelta = getch();
-        switch(scelta)
-        {
-        case UP_ARROW:
-            *cursore=*cursore-1;
-            while (*cursore < 0) *cursore = *cursore + MP_NCAMPI;
+        case ARROW:
+            scelta = getch();
+            switch(scelta)
+            {
+                case UP_ARROW:
+                    *cursore=*cursore-1;
+                    while (*cursore < 0) *cursore = *cursore + MP_NCAMPI;
+                    break;
+                case DOWN_ARROW:
+                    *cursore=*cursore+1;
+                    while (*cursore >= MP_NCAMPI)
+                    {
+                        *cursore = *cursore - MP_NCAMPI;
+                    }
+                    break;
+            }
             break;
-        case DOWN_ARROW:
-            *cursore=*cursore+1;
-            while (*cursore >= MP_NCAMPI) *cursore = *cursore - MP_NCAMPI;
-            break;
-        }
-        break;
-    case ENTER:
-        if (*cursore == MP_NCAMPI-1) ritorno = 0;
+        case ENTER:
+            if (*cursore == MP_NCAMPI-1) ritorno = 0;
             else ritorno = *cursore+1;
-        break;
-    case 'n':
-        ritorno = MP_VNUOVA;
-        break;
-    case 'N':
-        ritorno = MP_VNUOVA;
-        break;
-    case 'c':
-        ritorno = MP_VCARICA;
-        break;
-    case 'C':
-        ritorno = MP_VCARICA;
-        break;
-    case 's':
-        ritorno = MP_VSALVA;
-        break;
-    case 'S':
-        ritorno = MP_VSALVA;
-        break;
-    case 'r':
-        ritorno = MP_VRECORD;
-        break;
-    case 'R':
-        ritorno = MP_VRECORD;
-        break;
-    case 'i':
-        ritorno = MP_VIMP;
-        break;
-    case 'I':
-        ritorno = MP_VIMP;
-        break;
-    case 'a':
-        ritorno = MP_VAIUTO;
-        break;
-    case 'A':
-        ritorno = MP_VAIUTO;
-        break;
-    case ESC:
-        ritorno = 0;
-        break;
+            break;
+        case 'n':
+            ritorno = MP_VNUOVA;
+            break;
+        case 'N':
+            ritorno = MP_VNUOVA;
+            break;
+        case 'c':
+            ritorno = MP_VCARICA;
+            break;
+        case 'C':
+            ritorno = MP_VCARICA;
+            break;
+        case 's':
+            ritorno = MP_VSALVA;
+            break;
+        case 'S':
+            ritorno = MP_VSALVA;
+            break;
+        case 'r':
+            ritorno = MP_VRECORD;
+            break;
+        case 'R':
+            ritorno = MP_VRECORD;
+            break;
+        case 'i':
+            ritorno = MP_VIMP;
+            break;
+        case 'I':
+            ritorno = MP_VIMP;
+            break;
+        case 'a':
+            ritorno = MP_VAIUTO;
+            break;
+        case 'A':
+            ritorno = MP_VAIUTO;
+            break;
+        case ESC:
+            ritorno = 0;
+            break;
     }
     return ritorno;
 }
@@ -759,30 +780,73 @@ int Nuova_Partita(impostazioni * Imp, partita * Partita)
 int Controlla_Impostazioni (impostazioni Imp)
 {
     int errore=0, i;
+    int err_numero_giocatori = 0,
+        err_nome_partita = 0,
+        err_grandezza_campo = 0,
+        err_numero_pedine = 0,
+        err_giocatore_iniziale = 0,
+        err_colori = 0,
+        err_spazi = 0;
+    float max_pedine;
     impostazioni_giocatore * giocatore;
+
     //controlla tutte le impostazioni
-    if ((!strcmp(Imp.nome_partita,"")) ||  //nome partita
-        (Imp.numero_giocatori < 2 || Imp.numero_giocatori > Perimetro_Quadrato(MAX_GAME_SIZE)) || //numero giocatori
-        (Perimetro_Quadrato(Imp.grandezza_campo) < Imp.numero_giocatori || Imp.grandezza_campo<3 || Imp.grandezza_campo > MAX_GAME_SIZE) || //grandezza campo
-        (Imp.numero_pedine > (Imp.grandezza_campo * Perimetro_Quadrato(Imp.grandezza_campo))/Imp.numero_giocatori ||
-         Imp.numero_pedine < Imp.grandezza_campo) ||      //numero pedine
-        (Imp.giocatore_iniziale < 0 || Imp.giocatore_iniziale > Imp.numero_giocatori) ||    //giocatore iniziale
-        //colori
-        (Imp.colore_campo < 0  || Imp.colore_campo > 15) ||
+    if (!strcmp(Imp.nome_partita, "")) err_nome_partita = 1;
+    if (Imp.numero_giocatori < 2 ||
+        Imp.numero_giocatori > Perimetro_Quadrato(MAX_GAME_SIZE))
+    {
+        err_numero_giocatori = 1;
+    }
+    if (Perimetro_Quadrato(Imp.grandezza_campo) < Imp.numero_giocatori ||
+        Imp.grandezza_campo<3 ||
+        Imp.grandezza_campo > MAX_GAME_SIZE)
+    {
+        err_grandezza_campo = 1;
+    }
+    max_pedine = Imp.grandezza_campo * Perimetro_Quadrato(Imp.grandezza_campo);
+    max_pedine /= Imp.numero_giocatori;
+    if (Imp.numero_pedine > max_pedine ||
+         Imp.numero_pedine < Imp.grandezza_campo)
+    {
+        err_numero_pedine = 1;
+    }
+    if (Imp.giocatore_iniziale < 0 ||
+        Imp.giocatore_iniziale > Imp.numero_giocatori)
+    {
+        err_giocatore_iniziale = 1;
+    }
+    if ((Imp.colore_campo < 0  || Imp.colore_campo > 15) ||
         (Imp.colore_linee < 0 || Imp.colore_linee > 15) ||
-        (Imp.colore_selezione < 0 || Imp.colore_selezione > 15) ||
-        //suoni
-        ((Imp.suoni == true) &&
+        (Imp.colore_selezione < 0 || Imp.colore_selezione > 15))
+    {
+        err_colori = 1;
+    }
+    if ((Imp.suoni == true) &&
          ((Imp.suono_eliminazione < 0 || Imp.suono_eliminazione > 15) ||
           (Imp.suono_inserimento < 0 || Imp.suono_inserimento > 15) ||
           (Imp.suono_mulino < 0 || Imp.suono_mulino > 15) ||
           (Imp.suono_sconfitta < 0 || Imp.suono_sconfitta > 15) ||
           (Imp.suono_spostamento < 0 || Imp.suono_spostamento > 15) ||
-          (Imp.suono_vittoria < 0 || Imp.suono_vittoria > 15))) ||
-        //spazi righe e colonne
-        (Imp.spazio_colonne < 0 || Imp.spazio_colonne > MAX_SPAZIO_COLONNE) ||
+          (Imp.suono_vittoria < 0 || Imp.suono_vittoria > 15)))
+    {
+        err_suoni = 1;
+    }
+    if ((Imp.spazio_colonne < 0 || Imp.spazio_colonne > MAX_SPAZIO_COLONNE) ||
         (Imp.spazio_righe < 0 || Imp.spazio_righe > MAX_SPAZIO_RIGHE))
+        err_spazi = 1;
+    {
+        err_spazi = 1
+    }
+    if (err_numero_giocatori ||
+        err_nome_partita ||
+        err_grandezza_campo ||
+        err_numero_pedine ||
+        err_giocatore_iniziale ||
+        err_colori ||
+        err_spazi)
+    {
         errore = ERR_IMP_INVALID;
+    }
 
     //controlla le impostazioni per ogni giocatore e il numero di giocatori
     if (!errore)
@@ -792,8 +856,8 @@ int Controlla_Impostazioni (impostazioni Imp)
     }
     while (i<Imp.numero_giocatori && giocatore!= NULL && !errore)
     {
-        if (!strcmp(giocatore->nome_giocatore,"") ||    //nome giocatore
-            (giocatore->tipo_pedine < 0 || giocatore->tipo_pedine > 15) || // tipo pedine
+        if (!strcmp(giocatore->nome_giocatore,"") ||
+            (giocatore->tipo_pedine < 0 || giocatore->tipo_pedine > 15) ||
             (giocatore->colore_pedine < 0 || giocatore->colore_pedine > 15))
             errore = ERR_IMP_INVALID;
         i++;
@@ -802,7 +866,10 @@ int Controlla_Impostazioni (impostazioni Imp)
     //controlla numero giocatori
     if (!errore)
     {
-        if (i<Imp.numero_giocatori || giocatore != NULL) errore = ERR_IMP_INVALID;
+        if (i<Imp.numero_giocatori || giocatore != NULL)
+        {
+            errore = ERR_IMP_INVALID;
+        }
     }
 
     return errore;
@@ -820,7 +887,7 @@ void Inizializza_Partita(impostazioni Imp, partita * Partita)
     Partita->iniziata = true;
     Partita->mulino = false;
     if (Imp.giocatore_iniziale) Partita->turno = Imp.giocatore_iniziale;
-        else Partita->turno = rand()%Imp.numero_giocatori+1;
+    else Partita->turno = rand()%Imp.numero_giocatori+1;
     strcpy(Partita->nome,Imp.nome_partita);
     Partita->numero_giocatori = Imp.numero_giocatori;
     Partita->numero_pedine = Imp.numero_pedine;
@@ -848,7 +915,7 @@ void Inizializza_Partita(impostazioni Imp, partita * Partita)
 
 void Crea_Campo (campo * Campo, int quadrati)
 {
-    int dimensioni,caselle,i,j,porzione;
+    int dimensioni,caselle,i,j,porzione,offset;
 
     dimensioni = Lato_Campo(quadrati);
     Campo->caselle = malloc(sizeof(casella)*Area_Campo(quadrati));
@@ -859,20 +926,30 @@ void Crea_Campo (campo * Campo, int quadrati)
     for (i=0;i<quadrati;i++)
     {
         //disegna caselle mediane
-        *(Campo->caselle + i*dimensioni + dimensioni/2) = 0;
-        *(Campo->caselle + (dimensioni-1-i)*dimensioni + dimensioni / 2) = 0;
-        *(Campo->caselle + dimensioni/2*dimensioni + i) = 0;
-        *(Campo->caselle + dimensioni/2*dimensioni + dimensioni-1-i) = 0;
+        offset = i*dimensioni + dimensioni / 2;
+        *(Campo->caselle + offset) = 0;
+        offset = (dimensioni - 1 - i) * dimensioni + dimensioni / 2;
+        *(Campo->caselle + offset) = 0;
+        offset = dimensioni / 2 * dimensioni + i;
+        *(Campo->caselle + offset) = 0;
+        offset = dimensioni / 2 * dimensioni + dimensioni - 1 - i;
+        *(Campo->caselle + ) = 0;
 
         //prima metà
         caselle = quadrati/2;
         for (j=0; j<caselle; j++)
         {
             porzione = dimensioni/2-i;
-            *(Campo->caselle+i*dimensioni + porzione*j/caselle+i) = 0;
-            *(Campo->caselle+(dimensioni-1-i)*dimensioni + porzione*j/caselle+i) = 0;
-            *(Campo->caselle+(porzione*j/caselle+i)*dimensioni + i) = 0;
-            *(Campo->caselle+(porzione*j/caselle+i)*dimensioni + dimensioni-1-i) = 0;
+            offset = i*dimensioni + porzione*j/caselle+i;
+            *(Campo->caselle + offset) = 0;
+            offset = (dimensioni - 1 - i) * dimensioni +
+                     porzione  * j / caselle + i;
+            *(Campo->caselle + offset) = 0;
+            offset = (porzione * j / caselle + i) * dimensioni + i;
+            *(Campo->caselle + offset) = 0;
+            offset = (porzione * j / caselle + i) * dimensioni
+                     + dimensioni - 1 - i;
+            *(Campo->caselle + offset) = 0;
         }
         //seconda metà
         caselle = quadrati/2;
@@ -880,16 +957,24 @@ void Crea_Campo (campo * Campo, int quadrati)
         for (j=0;j<caselle; j++)
         {
             porzione = dimensioni/2-i;
-            *(Campo->caselle+i*dimensioni + (dimensioni - (porzione*j/caselle+1) -i)) = 0;
-            *(Campo->caselle+(dimensioni-1-i)*dimensioni + (dimensioni - (porzione*j/caselle+1) -i)) = 0;
-            *(Campo->caselle+(dimensioni - (porzione*j/caselle+1) -i)*dimensioni + i) = 0;
-            *(Campo->caselle+(dimensioni - (porzione*j/caselle+1) -i)*dimensioni + dimensioni -i-1) = 0;
+            offset = i*dimensioni + (dimensioni - (porzione*j/caselle+1) -i);
+            *(Campo->caselle + offset) = 0;
+            offset = (dimensioni - 1 - i) * dimensioni +
+                     (dimensioni - (porzione * j / caselle + 1) - i);
+            *(Campo->caselle + offset) = 0;
+            offset = (dimensioni - (porzione * j / caselle + 1) -i) *
+                     dimensioni + i;
+            *(Campo->caselle + offset) = 0;
+            offset = (dimensioni - (porzione * j / caselle + 1) - i) *
+                     dimensioni + dimensioni - i - 1;
+            *(Campo->caselle + offset) = 0;
         }
 
     }
 }
 
-void Crea_Buffer_Campo (buffer_campo ** buffer, campo Campo, int spazio_righe, int spazio_colonne)
+void Crea_Buffer_Campo (buffer_campo ** buffer, campo Campo,
+                        int spazio_righe, int spazio_colonne)
 {
     int dimensioni,i,j,h,k,l,m, height, width;
     signed char valore;
@@ -904,11 +989,13 @@ void Crea_Buffer_Campo (buffer_campo ** buffer, campo Campo, int spazio_righe, i
     width = dimensioni+(dimensioni-1)*spazio_colonne;
     temp = malloc (sizeof(char)*height*width);
 
-    /*  Nel buffer dello schermo viene memorizzato ciò da cui si prenderà la porazione da stampare.
-        Viene tutto memorizzato come una matrice di caratteri: le caselle vuote come 'O', le pedine
-        come il numero del rispettivo giocatore, le linee con il rispettivo carattere mentre lo spazio,
-        per non essere confuso con il giocatore corrispondente al suo valore ASCII, verrà memorizzato
-        con un valore arbitrario, KEY_SPAZIO, abbastanza grande da non poter essere un giocatore.       */
+    /*  Nel buffer dello schermo viene memorizzato ciò da cui si prenderà 
+        la porazione da stampare. Viene tutto memorizzato come una matrice di
+        caratteri: le caselle vuote come 'O', le pedine come il numero del
+        rispettivo giocatore, le linee con il rispettivo carattere mentre lo
+        spazio, per non essere confuso con il giocatore corrispondente al suo
+        valore ASCII, verrà memorizzato con un valore arbitrario, KEY_SPAZIO,
+        abbastanza grande da non poter essere un giocatore.  */
 
     h=0;
     k=0;
@@ -935,7 +1022,7 @@ void Crea_Buffer_Campo (buffer_campo ** buffer, campo Campo, int spazio_righe, i
                 //vuoto
                 else if (k<width)
                     for (l=0;l<spazio_colonne;l++)
-                    temp[h*width+(k++)] = KEY_SPAZIO;
+                        temp[h*width+(k++)] = KEY_SPAZIO;
             }
             //altro
             else
@@ -1071,10 +1158,10 @@ void Stampa_Buffer_Campo (buffer_campo * buffer, int top, int left, int width, i
     }
     //definisci il bottom
     if (y+height>numero_righe) bottom = numero_righe;
-        else
-        {
-            bottom = y+height;
-        }
+    else
+    {
+        bottom = y+height;
+    }
 
     //stampa
     for (i=y;i<bottom;i++)
@@ -1082,7 +1169,7 @@ void Stampa_Buffer_Campo (buffer_campo * buffer, int top, int left, int width, i
         gotoxy(left,top+(i-y));
         //determina il right
         if (x+width > numero_colonne) right = numero_colonne;
-            else right = x+width;
+        else right = x+width;
         for (j=x;j<right;j++)
         {
             //se la casella è vuota
@@ -1091,7 +1178,7 @@ void Stampa_Buffer_Campo (buffer_campo * buffer, int top, int left, int width, i
                 //si seleziona lo sfondo a seconda che la casella sia quella selezionata dal cursore o no
                 if ((cursore.x*(1+Imp.spazio_colonne)==j && cursore.y*(1+Imp.spazio_righe)==i)||(pedina_da_spostare.x*(1+Imp.spazio_colonne)==j && pedina_da_spostare.y*(1+Imp.spazio_righe)==i))
                     Cambia_Colore(Imp.colore_linee,Imp.colore_selezione);
-                    else Cambia_Colore(Imp.colore_linee,Imp.colore_campo);
+                else Cambia_Colore(Imp.colore_linee,Imp.colore_campo);
                 putchar('O');
             }
             //se la casella non è vuota
@@ -1100,7 +1187,7 @@ void Stampa_Buffer_Campo (buffer_campo * buffer, int top, int left, int width, i
                 //come sopra, si seleziona lo sfondo
                 if ((cursore.x*(1+Imp.spazio_colonne)==j && cursore.y*(1+Imp.spazio_righe)==i)||(pedina_da_spostare.x*(1+Imp.spazio_colonne)==j && pedina_da_spostare.y*(1+Imp.spazio_righe)==i))
                     Cambia_Colore(*(colori+valore-1),Imp.colore_selezione);
-                    else Cambia_Colore(*(colori+valore-1),Imp.colore_campo);
+                else Cambia_Colore(*(colori+valore-1),Imp.colore_campo);
                 putchar(Pedina_To_Char(*(pedine+valore-1)));
             }
             //altrimenti sono linee o spazio
@@ -1201,7 +1288,7 @@ void Stampa_Finestra_Pedine (int left, int top, int width, int height, partita P
         printf(puntatore->nome_giocatore);
         Cambia_Colore(puntatore->colore_pedine,DEF_BACK_COLOR);
         if (puntatore->pedine_da_inserire) max_pedine = puntatore->pedine_da_inserire;
-            else max_pedine = Partita.numero_pedine - puntatore->pedine_in_gioco;
+        else max_pedine = Partita.numero_pedine - puntatore->pedine_in_gioco;
         for (j=0;j<max_pedine;j++)
         {
             if (!(j%pedine_x_riga)) gotoxy(left+1,top+2+i*righe_x_gioc+j/pedine_x_riga);
@@ -1269,7 +1356,7 @@ void Stampa_Menu_Gioco (partita Partita, impostazioni Imp)
     for (i=1;i<Partita.turno; i++)  puntatore = puntatore->prossimo;
     //ricavo la fase
     if (puntatore->pedine_da_inserire == 0) strcpy(fase,"spostamento");
-        else strcpy(fase,"posizionamento");
+    else strcpy(fase,"posizionamento");
     Cambia_Colore(DEF_COLOR,DEF_BACK_COLOR);
     //il nome della partita
     gotoxy(1,0);
@@ -1395,42 +1482,42 @@ casella_selezionata Casella_Adiacente(casella_selezionata Casella, direzione Dir
     trovata = Casella;
     switch (Direzione)
     {
-    case UP:
-        i=Casella.y-1;
-        while (i>=0 && trovata.y==Casella.y)
-        {
-            if (Campo.caselle[i*(Lato_Campo(Campo.grandezza))+Casella.x] != -1)
-                trovata.y = i;
-            else i--;
-        }
-        break;
-    case DOWN:
-        i=Casella.y+1;
-        while (i<Lato_Campo(Campo.grandezza) && trovata.y==Casella.y)
-        {
-            if (Campo.caselle[i*(Lato_Campo(Campo.grandezza))+Casella.x] != -1)
-                trovata.y = i;
-            else i++;
-        }
-        break;
-    case LEFT:
-        i=Casella.x-1;
-        while (i>=0 && trovata.x==Casella.x)
-        {
-            if (Campo.caselle[Casella.y*(Lato_Campo(Campo.grandezza))+i] != -1)
-                trovata.x = i;
-            else i--;
-        }
-        break;
-    case RIGHT:
-        i=Casella.x+1;
-        while (i<Lato_Campo(Campo.grandezza) && trovata.x==Casella.x)
-        {
-            if (Campo.caselle[Casella.y*(Lato_Campo(Campo.grandezza))+i] != -1)
-                trovata.x = i;
-            else i++;
-        }
-        break;
+        case UP:
+            i=Casella.y-1;
+            while (i>=0 && trovata.y==Casella.y)
+            {
+                if (Campo.caselle[i*(Lato_Campo(Campo.grandezza))+Casella.x] != -1)
+                    trovata.y = i;
+                else i--;
+            }
+            break;
+        case DOWN:
+            i=Casella.y+1;
+            while (i<Lato_Campo(Campo.grandezza) && trovata.y==Casella.y)
+            {
+                if (Campo.caselle[i*(Lato_Campo(Campo.grandezza))+Casella.x] != -1)
+                    trovata.y = i;
+                else i++;
+            }
+            break;
+        case LEFT:
+            i=Casella.x-1;
+            while (i>=0 && trovata.x==Casella.x)
+            {
+                if (Campo.caselle[Casella.y*(Lato_Campo(Campo.grandezza))+i] != -1)
+                    trovata.x = i;
+                else i--;
+            }
+            break;
+        case RIGHT:
+            i=Casella.x+1;
+            while (i<Lato_Campo(Campo.grandezza) && trovata.x==Casella.x)
+            {
+                if (Campo.caselle[Casella.y*(Lato_Campo(Campo.grandezza))+i] != -1)
+                    trovata.x = i;
+                else i++;
+            }
+            break;
     }
     return trovata;
 }
@@ -1452,44 +1539,44 @@ booleano Stessa_Linea(casella_selezionata Casella1, casella_selezionata Casella2
     {
         //si trovano nelle prime righe
         if (Casella1.x<=Campo.grandezza &&
-            Casella1.y >= Casella1.x &&
-            Casella1.y < Lato_Campo(Campo.grandezza)-Casella1.x &&
-            Casella2.y >= Casella1.x &&
-            Casella2.y < Lato_Campo(Campo.grandezza)-Casella1.x)
+                Casella1.y >= Casella1.x &&
+                Casella1.y < Lato_Campo(Campo.grandezza)-Casella1.x &&
+                Casella2.y >= Casella1.x &&
+                Casella2.y < Lato_Campo(Campo.grandezza)-Casella1.x)
             risultato = true;
         //si trovano nelle ultime righe
         if (Casella1.x >= Campo.grandezza*2-2 &&
-            Casella1.y <= Casella1.x &&
-            Casella1.y >= Campo.grandezza*3-3-Casella1.x &&
-            Casella2.y <= Casella1.x &&
-            Casella2.y >= Campo.grandezza*3-3-Casella1.x)
+                Casella1.y <= Casella1.x &&
+                Casella1.y >= Campo.grandezza*3-3-Casella1.x &&
+                Casella2.y <= Casella1.x &&
+                Casella2.y >= Campo.grandezza*3-3-Casella1.x)
             risultato = true;
         //si trovano nelle righe centrali
         if (Casella1.x==Lato_Campo(Campo.grandezza)/2 &&
-            ((Casella1.y<=Campo.grandezza && Casella2.y<=Campo.grandezza)||
-            (Casella1.y>=Campo.grandezza*2-2 && Casella2.y>=Campo.grandezza*2-2)))
+                ((Casella1.y<=Campo.grandezza && Casella2.y<=Campo.grandezza)||
+                 (Casella1.y>=Campo.grandezza*2-2 && Casella2.y>=Campo.grandezza*2-2)))
             risultato = true;
     }
     else if (Casella1.y == Casella2.y)
     {
         //si trovano nelle prime righe
         if (Casella1.y<=Campo.grandezza &&
-            Casella1.x >= Casella1.y &&
-            Casella1.x < Lato_Campo(Campo.grandezza)-Casella1.y &&
-            Casella2.x >= Casella1.y &&
-            Casella2.x < Lato_Campo(Campo.grandezza)-Casella1.y)
+                Casella1.x >= Casella1.y &&
+                Casella1.x < Lato_Campo(Campo.grandezza)-Casella1.y &&
+                Casella2.x >= Casella1.y &&
+                Casella2.x < Lato_Campo(Campo.grandezza)-Casella1.y)
             risultato = true;
         //si trovano nelle ultime righe
         if (Casella1.y >= Campo.grandezza*2-2 &&
-            Casella1.x <= Casella1.y &&
-            Casella1.x >= Lato_Campo(Campo.grandezza)-1-Casella1.y &&
-            Casella2.x <= Casella1.y &&
-            Casella2.x >= Lato_Campo(Campo.grandezza)-1-Casella1.y)
+                Casella1.x <= Casella1.y &&
+                Casella1.x >= Lato_Campo(Campo.grandezza)-1-Casella1.y &&
+                Casella2.x <= Casella1.y &&
+                Casella2.x >= Lato_Campo(Campo.grandezza)-1-Casella1.y)
             risultato = true;
         //si trovano nelle righe centrali
         if (Casella1.y==Lato_Campo(Campo.grandezza)/2 &&
-            ((Casella1.x<=Campo.grandezza && Casella2.x<=Campo.grandezza)||
-            (Casella1.x>=Campo.grandezza*2-2 && Casella2.x>=Campo.grandezza*2-2)))
+                ((Casella1.x<=Campo.grandezza && Casella2.x<=Campo.grandezza)||
+                 (Casella1.x>=Campo.grandezza*2-2 && Casella2.x>=Campo.grandezza*2-2)))
             risultato = true;
     }
     else return false;
@@ -1568,23 +1655,23 @@ booleano Mulino (casella_selezionata Casella, campo Campo)
     {
         return true;
     }
-        else return false;
+    else return false;
 }
 
 booleano Stessa_Casella (casella_selezionata Casella1, casella_selezionata Casella2)
 {
     if (Casella1.x == Casella2.x && Casella1.y == Casella2.y) return true;
-        else return false;
+    else return false;
 }
 
 booleano Adiacente (casella_selezionata Casella1, casella_selezionata Casella2, campo Campo)
 {
     if ((Stessa_Linea(Casella1,Casella2,Campo)) &&
-        (Stessa_Casella(Casella_Adiacente(Casella1,UP,Campo),Casella2) ||
-         Stessa_Casella(Casella_Adiacente(Casella1,DOWN,Campo),Casella2) ||
-         Stessa_Casella(Casella_Adiacente(Casella1,LEFT,Campo),Casella2) ||
-         Stessa_Casella(Casella_Adiacente(Casella1,RIGHT,Campo),Casella2)))
-            return true;
+            (Stessa_Casella(Casella_Adiacente(Casella1,UP,Campo),Casella2) ||
+             Stessa_Casella(Casella_Adiacente(Casella1,DOWN,Campo),Casella2) ||
+             Stessa_Casella(Casella_Adiacente(Casella1,LEFT,Campo),Casella2) ||
+             Stessa_Casella(Casella_Adiacente(Casella1,RIGHT,Campo),Casella2)))
+        return true;
     else return false;
 }
 
@@ -1596,25 +1683,25 @@ int Inserisci_Pedina (casella_selezionata Casella, partita * Partita)
 
     switch (valore)
     {
-    case -1:
-        errore = ERR_CASELLA_INESISTENTE;
-        break;
-    case 0:
-        Setta_Valore(Casella,Partita->campo,Partita->turno);
-        i=1;
-        puntatore = Partita->giocatori;
-        while (i<Partita->turno)
-        {
-            puntatore = puntatore->prossimo;
-            i++;
-        }
-        puntatore->pedine_da_inserire--;
-        puntatore->pedine_in_gioco++;
-        errore = 0;
-        break;
-    default:
-        errore = ERR_CASELLA_PIENA;
-        break;
+        case -1:
+            errore = ERR_CASELLA_INESISTENTE;
+            break;
+        case 0:
+            Setta_Valore(Casella,Partita->campo,Partita->turno);
+            i=1;
+            puntatore = Partita->giocatori;
+            while (i<Partita->turno)
+            {
+                puntatore = puntatore->prossimo;
+                i++;
+            }
+            puntatore->pedine_da_inserire--;
+            puntatore->pedine_in_gioco++;
+            errore = 0;
+            break;
+        default:
+            errore = ERR_CASELLA_PIENA;
+            break;
     }
 
     return errore;
@@ -1646,8 +1733,8 @@ int Sposta_Pedina (casella_selezionata Sorgente, casella_selezionata Destinazion
         else return ERR_PEDINA_AVVERSARIA;
     }
     else
-    if (valore>0) return ERR_CASELLA_PIENA;
-    else return ERR_CASELLA_INESISTENTE;
+        if (valore>0) return ERR_CASELLA_PIENA;
+        else return ERR_CASELLA_INESISTENTE;
     return 0;
 }
 
@@ -1678,44 +1765,44 @@ int Elimina_Pedina(casella_selezionata Casella, partita * Partita)
 int Scelta_Casella(casella_selezionata * cursore, partita * Partita)
 {
     /***
-    restituisce:
-    0: esci
-    -1: sposta cursore
-    1: invio
-    ***/
+restituisce:
+0: esci
+-1: sposta cursore
+1: invio
+     ***/
     unsigned char scelta;
     int ritorno;
 
     scelta = getch();
     switch (scelta)
     {
-    case ARROW:
-        scelta = getch();
-        switch (scelta)
-        {
-        case UP_ARROW:
-            *cursore = Casella_Adiacente(*cursore,UP,Partita->campo);
+        case ARROW:
+            scelta = getch();
+            switch (scelta)
+            {
+                case UP_ARROW:
+                    *cursore = Casella_Adiacente(*cursore,UP,Partita->campo);
+                    break;
+                case DOWN_ARROW:
+                    *cursore = Casella_Adiacente(*cursore,DOWN,Partita->campo);
+                    break;
+                case LEFT_ARROW:
+                    *cursore = Casella_Adiacente(*cursore,LEFT,Partita->campo);
+                    break;
+                case RIGHT_ARROW:
+                    *cursore = Casella_Adiacente(*cursore,RIGHT,Partita->campo);
+                    break;
+            }
+            ritorno = -1;
             break;
-        case DOWN_ARROW:
-            *cursore = Casella_Adiacente(*cursore,DOWN,Partita->campo);
+        case ENTER:
+            ritorno = 1;
             break;
-        case LEFT_ARROW:
-            *cursore = Casella_Adiacente(*cursore,LEFT,Partita->campo);
+        case ESC:
+            ritorno = 0;
             break;
-        case RIGHT_ARROW:
-            *cursore = Casella_Adiacente(*cursore,RIGHT,Partita->campo);
-            break;
-        }
-        ritorno = -1;
-        break;
-    case ENTER:
-        ritorno = 1;
-        break;
-    case ESC:
-        ritorno = 0;
-        break;
-    default:
-        ritorno = -1;
+        default:
+            ritorno = -1;
     }
     return ritorno;
 }
@@ -1842,11 +1929,11 @@ int Fase_Posizionamento (partita * Partita, impostazioni Imp)
                             elimina = true;
                             for (i=0;i<Lato_Campo(Partita->campo.grandezza) && elimina;i++)
                                 for (j=0;j<Lato_Campo(Partita->campo.grandezza) && elimina; j++)
-                            {
-                                if (Valore_Casella(Casella_Selezionata(j,i),Partita->campo) == valore)
-                                    if (!Mulino(Casella_Selezionata(j,i),Partita->campo))
-                                        elimina = false;
-                            }
+                                {
+                                    if (Valore_Casella(Casella_Selezionata(j,i),Partita->campo) == valore)
+                                        if (!Mulino(Casella_Selezionata(j,i),Partita->campo))
+                                            elimina = false;
+                                }
                         }
                         else elimina = true;
 
@@ -1871,7 +1958,7 @@ int Fase_Posizionamento (partita * Partita, impostazioni Imp)
         ok = false;
     }
     if (esci) return ERR_INTERROTTA;
-        else return 0;
+    else return 0;
 }
 
 int Fase_Spostamento (partita * Partita, impostazioni Imp)
@@ -1916,7 +2003,7 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
         while (!ok && !esci)
         {
             if (prima_casella_scelta) Stampa_Schermata(Campo,*Partita,Imp,cursore,pedina_da_spostare);
-                else Stampa_Schermata(Campo,*Partita,Imp,cursore,cursore);
+            else Stampa_Schermata(Campo,*Partita,Imp,cursore,cursore);
             //aspetta l'input dell'utente e somma il tempo impiegato al punteggio
             start=clock();
             scelta = Scelta_Casella(&cursore,Partita);
@@ -1952,11 +2039,11 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
                             elimina = true;
                             for (i=0;i<Lato_Campo(Partita->campo.grandezza) && elimina;i++)
                                 for (j=0;j<Lato_Campo(Partita->campo.grandezza) && elimina; j++)
-                            {
-                                if (Valore_Casella(Casella_Selezionata(j,i),Partita->campo) == Valore_Casella(cursore,Partita->campo))
-                                    if (!Mulino(Casella_Selezionata(j,i),Partita->campo))
-                                        elimina = false;
-                            }
+                                {
+                                    if (Valore_Casella(Casella_Selezionata(j,i),Partita->campo) == Valore_Casella(cursore,Partita->campo))
+                                        if (!Mulino(Casella_Selezionata(j,i),Partita->campo))
+                                            elimina = false;
+                                }
                         }
                         else elimina = true;
 
@@ -2028,7 +2115,7 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
         ok = false;
     }
     if (esci) return ERR_INTERROTTA;
-        else return 0;
+    else return 0;
 }
 
 int Vittoria (short_string Nome, float Punteggio)
@@ -2065,12 +2152,12 @@ int Vittoria (short_string Nome, float Punteggio)
                 }
             }
             /*se i recod sono meno di 10 o se l'ultimo punteggio
-            è maggiore del punteggio del vincitore, quest'ultimo
-            verrà inserito (il punteggio migliore è il più basso) */
+              è maggiore del punteggio del vincitore, quest'ultimo
+              verrà inserito (il punteggio migliore è il più basso) */
             if (i<MR_MAX || punteggi[i-1]>=Punteggio)
             {
                 if (i<MR_MAX) j=i;
-                    else j=MR_MAX-1;
+                else j=MR_MAX-1;
                 while (punteggi[j-1]>Punteggio)
                 {
                     punteggi[j]=punteggi[j-1];
@@ -2162,12 +2249,12 @@ booleano Giocatore_Eliminato(partita Partita, int giocatore)
         eliminato = true;
         for (i=0; i<Lato_Campo(Partita.campo.grandezza) && eliminato; i++)
             for (j=0; j<Lato_Campo(Partita.campo.grandezza) && eliminato;j++)
-        {
-            if ((Valore_Casella((casella = Casella_Selezionata(j,i)),Partita.campo))==giocatore)
             {
-                if (!Pedina_Bloccata(casella,Partita.campo)) eliminato = false;
+                if ((Valore_Casella((casella = Casella_Selezionata(j,i)),Partita.campo))==giocatore)
+                {
+                    if (!Pedina_Bloccata(casella,Partita.campo)) eliminato = false;
+                }
             }
-        }
     }
     return eliminato;
 }
@@ -2187,7 +2274,7 @@ booleano Fine_Partita (partita Partita)
         j++;
     }
     if (i>1) return false;
-        else return true;
+    else return true;
 }
 
 
@@ -2459,10 +2546,10 @@ void Stampa_Menu_Lista(int cursore, lista_stringhe lista_nomi, int colore)
     Stampa_Cornice(colore);
     if (cursore/BUFFER_TESTO_Y>0)
     {
-       for (i=0; i<BUFFER_TESTO_Y*(cursore/BUFFER_TESTO_Y);i++)
-       {
-           lista_nomi = lista_nomi->prossimo;
-       }
+        for (i=0; i<BUFFER_TESTO_Y*(cursore/BUFFER_TESTO_Y);i++)
+        {
+            lista_nomi = lista_nomi->prossimo;
+        }
     }
     i=0;
     Cambia_Colore(DEF_COLOR,colore-8);
@@ -2480,15 +2567,15 @@ void Stampa_Menu_Lista(int cursore, lista_stringhe lista_nomi, int colore)
 int Scelta_Menu_Lista(int * cursore, int numero_voci)
 {
     /*****
-    valori di ritorno:
-    0           esci
-    invio       1-num_voci
-    su          -1
-    giù         -1
-    destra      num_partite+1 - num_partite*2
-    sinistra    num_partite*2+1 - num_partite*3
-    canc        num_partite*3+1 - num_partite*4
-    *****/
+      valori di ritorno:
+      0           esci
+      invio       1-num_voci
+      su          -1
+      giù         -1
+      destra      num_partite+1 - num_partite*2
+      sinistra    num_partite*2+1 - num_partite*3
+      canc        num_partite*3+1 - num_partite*4
+     *****/
 
     unsigned char scelta;
     int ritorno=-1;
@@ -2496,34 +2583,34 @@ int Scelta_Menu_Lista(int * cursore, int numero_voci)
     scelta = getch();
     switch (scelta)
     {
-    case ARROW:
-        scelta = getch();
-        switch(scelta)
-        {
-        case UP_ARROW:
-            *cursore=*cursore-1;
-            while (*cursore < 0) *cursore = *cursore + numero_voci;
+        case ARROW:
+            scelta = getch();
+            switch(scelta)
+            {
+                case UP_ARROW:
+                    *cursore=*cursore-1;
+                    while (*cursore < 0) *cursore = *cursore + numero_voci;
+                    break;
+                case DOWN_ARROW:
+                    *cursore=*cursore+1;
+                    while (*cursore >= numero_voci) *cursore = *cursore - numero_voci;
+                    break;
+                case CANC:
+                    ritorno = *cursore+1+numero_voci*3;
+                    break;
+                case RIGHT_ARROW:
+                    ritorno = *cursore+1+numero_voci;
+                    break;
+                case LEFT_ARROW:
+                    ritorno = *cursore+1+numero_voci*2;
+                    break;
+            }
             break;
-        case DOWN_ARROW:
-            *cursore=*cursore+1;
-            while (*cursore >= numero_voci) *cursore = *cursore - numero_voci;
+        case ENTER:
+            ritorno = *cursore+1;
             break;
-        case CANC:
-            ritorno = *cursore+1+numero_voci*3;
-            break;
-        case RIGHT_ARROW:
-            ritorno = *cursore+1+numero_voci;
-            break;
-        case LEFT_ARROW:
-            ritorno = *cursore+1+numero_voci*2;
-            break;
-        }
-        break;
-    case ENTER:
-        ritorno = *cursore+1;
-        break;
-    case ESC:
-        ritorno = 0;
+        case ESC:
+            ritorno = 0;
     }
     return ritorno;
 }
@@ -2585,16 +2672,16 @@ int Leggi_Nomi_Partite (lista_stringhe * lista_nomi)
 
 int Impostazioni(impostazioni * Imp)
 {
-        /*****
-    valori di ritorno:
-    0           esci
-    invio       1-num_voci
-    su          -1
-    giù         -1
-    destra      num_partite+1 - num_partite*2
-    sinistra    num_partite*2+1 - num_partite*3
-    canc        num_partite*3+1 - num_partite*4
-    *****/
+    /*****
+      valori di ritorno:
+      0           esci
+      invio       1-num_voci
+      su          -1
+      giù         -1
+      destra      num_partite+1 - num_partite*2
+      sinistra    num_partite*2+1 - num_partite*3
+      canc        num_partite*3+1 - num_partite*4
+     *****/
     lista_stringhe lista_nomi, lista_valori;
     booleano esci;
     int scelta, numero_stringhe,i;
@@ -2711,9 +2798,9 @@ void Crea_Lista_Impostazioni (impostazioni Imp, lista_stringhe * lista_nomi, lis
         sprintf(puntatore_valori->stringa,"%c",Pedina_To_Char(puntatore_giocatore->tipo_pedine));
         puntatore_nomi->prossimo = malloc(sizeof(elemento_stringa));
         puntatore_valori->prossimo = malloc(sizeof(elemento_stringa));
-         puntatore_nomi=puntatore_nomi->prossimo;
+        puntatore_nomi=puntatore_nomi->prossimo;
         puntatore_valori=puntatore_valori->prossimo;
-       //colori
+        //colori
         sprintf(puntatore_nomi->stringa,"Colore giocatore %d",i+1);
         Colore_To_String(puntatore_valori->stringa, puntatore_giocatore->colore_pedine);
         puntatore_nomi->prossimo = malloc(sizeof(elemento_stringa));
@@ -2767,7 +2854,7 @@ void Crea_Lista_Impostazioni (impostazioni Imp, lista_stringhe * lista_nomi, lis
     //mostra coordinate
     strcpy(puntatore_nomi->stringa,"Mostra coordinate");
     if (Imp.mostra_coordinate) strcpy(puntatore_valori->stringa, "si");
-        else strcpy(puntatore_valori->stringa, "no");
+    else strcpy(puntatore_valori->stringa, "no");
     puntatore_nomi->prossimo = malloc(sizeof(elemento_stringa));
     puntatore_valori->prossimo = malloc(sizeof(elemento_stringa));
     puntatore_nomi=puntatore_nomi->prossimo;
@@ -2776,7 +2863,7 @@ void Crea_Lista_Impostazioni (impostazioni Imp, lista_stringhe * lista_nomi, lis
     //mostra pedine fuori
     strcpy(puntatore_nomi->stringa,"Mostra pedine fuori");
     if (Imp.mostra_pedine_fuori) strcpy(puntatore_valori->stringa, "si");
-        else strcpy(puntatore_valori->stringa, "no");
+    else strcpy(puntatore_valori->stringa, "no");
     puntatore_nomi->prossimo = malloc(sizeof(elemento_stringa));
     puntatore_valori->prossimo = malloc(sizeof(elemento_stringa));
     puntatore_nomi=puntatore_nomi->prossimo;
@@ -2785,7 +2872,7 @@ void Crea_Lista_Impostazioni (impostazioni Imp, lista_stringhe * lista_nomi, lis
     //mostra tempo
     strcpy(puntatore_nomi->stringa,"Mostra punteggio");
     if (Imp.mostra_punteggio) strcpy(puntatore_valori->stringa, "si");
-        else strcpy(puntatore_valori->stringa, "no");
+    else strcpy(puntatore_valori->stringa, "no");
     puntatore_nomi->prossimo = malloc(sizeof(elemento_stringa));
     puntatore_valori->prossimo = malloc(sizeof(elemento_stringa));
     puntatore_nomi=puntatore_nomi->prossimo;
@@ -2794,7 +2881,7 @@ void Crea_Lista_Impostazioni (impostazioni Imp, lista_stringhe * lista_nomi, lis
     //suoni on off
     strcpy(puntatore_nomi->stringa, "Suoni on/off");
     if (Imp.suoni) strcpy(puntatore_valori->stringa, "si");
-        else strcpy(puntatore_valori->stringa, "no");
+    else strcpy(puntatore_valori->stringa, "no");
     puntatore_nomi->prossimo = malloc(sizeof(elemento_stringa));
     puntatore_valori->prossimo = malloc(sizeof(elemento_stringa));
     puntatore_nomi=puntatore_nomi->prossimo;
@@ -2858,11 +2945,11 @@ void Stampa_Menu_Impostazioni(int cursore, lista_stringhe lista_nomi, lista_stri
     Stampa_Cornice(colore);
     if (cursore/BUFFER_TESTO_Y>0)
     {
-       for (i=0; i<BUFFER_TESTO_Y*(cursore/BUFFER_TESTO_Y);i++)
-       {
-           lista_nomi = lista_nomi->prossimo;
-           lista_valori = lista_valori->prossimo;
-       }
+        for (i=0; i<BUFFER_TESTO_Y*(cursore/BUFFER_TESTO_Y);i++)
+        {
+            lista_nomi = lista_nomi->prossimo;
+            lista_valori = lista_valori->prossimo;
+        }
     }
     i=0;
     Cambia_Colore(DEF_COLOR,colore-8);
@@ -2890,49 +2977,49 @@ int Cambia_Impostazione(impostazioni * Imp, int indice, int valore)
     {
         switch (indice)
         {
-        case 0:
-            if (!valore)
-                if (Messaggio("Ripristinare tutte le impostazioni?", true))
-                Impostazioni_Predefinite(Imp);
-            break;
-        case 1:
-            if (!valore) Leggi_Valore_Stringa(Imp->nome_partita);
-            break;
-        case 3:
-            Imp->grandezza_campo+= valore;
-            if (Imp->grandezza_campo > MAX_GAME_SIZE)
-            {
-                Imp->grandezza_campo = Imp->numero_giocatori/4;
-                if (Imp->numero_giocatori%4) Imp->grandezza_campo++;
-                Imp->grandezza_campo++;
-                if (Imp->grandezza_campo<MIN_GAME_SIZE) Imp->grandezza_campo = MIN_GAME_SIZE;
-            }
-            if (Imp->grandezza_campo < MIN_GAME_SIZE) Imp->grandezza_campo = MAX_GAME_SIZE;
-            if ((Imp->grandezza_campo-1)*4<Imp->numero_giocatori) Imp->grandezza_campo = MAX_GAME_SIZE;
-            if (Imp->numero_pedine > ((Imp->grandezza_campo-1)*4*Imp->grandezza_campo)/Imp->numero_giocatori) Imp->numero_pedine = ((Imp->grandezza_campo-1)*4*Imp->grandezza_campo)/Imp->numero_giocatori;
-            if (Imp->numero_pedine < Imp->grandezza_campo) Imp->numero_pedine = Imp->grandezza_campo;
-            Cambia_Impostazioni_Giocatori(Imp);
-            break;
-        case 2:
-            Imp->numero_giocatori+= valore;
-            if (Imp->numero_giocatori<2) Imp->numero_giocatori = Perimetro_Quadrato(MAX_GAME_SIZE);
-            if (Imp->numero_giocatori>Perimetro_Quadrato(MAX_GAME_SIZE)) Imp->numero_giocatori = 2;
-            while (Perimetro_Quadrato(Imp->grandezza_campo)<Imp->numero_giocatori) Imp->grandezza_campo++;
-            if (Imp->numero_pedine < Imp->grandezza_campo) Imp->numero_pedine = Imp->grandezza_campo;
-            if (Imp->numero_pedine > (Perimetro_Quadrato(Imp->grandezza_campo)*Imp->grandezza_campo)/Imp->numero_giocatori) Imp->numero_pedine = ((Imp->grandezza_campo-1)*4*Imp->grandezza_campo)/Imp->numero_giocatori;
-            if (Imp->giocatore_iniziale > Imp->numero_giocatori) Imp->giocatore_iniziale = Imp->numero_giocatori;
-            Cambia_Impostazioni_Giocatori(Imp);
-            break;
-        case 4:
-            Imp->numero_pedine+= valore;
-            if (Imp->numero_pedine > (Perimetro_Quadrato(Imp->grandezza_campo)*Imp->grandezza_campo)/Imp->numero_giocatori) Imp->numero_pedine = Imp->grandezza_campo;
-            if (Imp->numero_pedine < Imp->grandezza_campo) Imp->numero_pedine = (Perimetro_Quadrato(Imp->grandezza_campo)*Imp->grandezza_campo)/Imp->numero_giocatori;
-            break;
-        case 5:
-            Imp->giocatore_iniziale+= valore;
-            if (Imp->giocatore_iniziale < 0) Imp->giocatore_iniziale = Imp->numero_giocatori;
-            if (Imp->giocatore_iniziale > Imp->numero_giocatori) Imp->giocatore_iniziale = 0;
-            break;
+            case 0:
+                if (!valore)
+                    if (Messaggio("Ripristinare tutte le impostazioni?", true))
+                        Impostazioni_Predefinite(Imp);
+                break;
+            case 1:
+                if (!valore) Leggi_Valore_Stringa(Imp->nome_partita);
+                break;
+            case 3:
+                Imp->grandezza_campo+= valore;
+                if (Imp->grandezza_campo > MAX_GAME_SIZE)
+                {
+                    Imp->grandezza_campo = Imp->numero_giocatori/4;
+                    if (Imp->numero_giocatori%4) Imp->grandezza_campo++;
+                    Imp->grandezza_campo++;
+                    if (Imp->grandezza_campo<MIN_GAME_SIZE) Imp->grandezza_campo = MIN_GAME_SIZE;
+                }
+                if (Imp->grandezza_campo < MIN_GAME_SIZE) Imp->grandezza_campo = MAX_GAME_SIZE;
+                if ((Imp->grandezza_campo-1)*4<Imp->numero_giocatori) Imp->grandezza_campo = MAX_GAME_SIZE;
+                if (Imp->numero_pedine > ((Imp->grandezza_campo-1)*4*Imp->grandezza_campo)/Imp->numero_giocatori) Imp->numero_pedine = ((Imp->grandezza_campo-1)*4*Imp->grandezza_campo)/Imp->numero_giocatori;
+                if (Imp->numero_pedine < Imp->grandezza_campo) Imp->numero_pedine = Imp->grandezza_campo;
+                Cambia_Impostazioni_Giocatori(Imp);
+                break;
+            case 2:
+                Imp->numero_giocatori+= valore;
+                if (Imp->numero_giocatori<2) Imp->numero_giocatori = Perimetro_Quadrato(MAX_GAME_SIZE);
+                if (Imp->numero_giocatori>Perimetro_Quadrato(MAX_GAME_SIZE)) Imp->numero_giocatori = 2;
+                while (Perimetro_Quadrato(Imp->grandezza_campo)<Imp->numero_giocatori) Imp->grandezza_campo++;
+                if (Imp->numero_pedine < Imp->grandezza_campo) Imp->numero_pedine = Imp->grandezza_campo;
+                if (Imp->numero_pedine > (Perimetro_Quadrato(Imp->grandezza_campo)*Imp->grandezza_campo)/Imp->numero_giocatori) Imp->numero_pedine = ((Imp->grandezza_campo-1)*4*Imp->grandezza_campo)/Imp->numero_giocatori;
+                if (Imp->giocatore_iniziale > Imp->numero_giocatori) Imp->giocatore_iniziale = Imp->numero_giocatori;
+                Cambia_Impostazioni_Giocatori(Imp);
+                break;
+            case 4:
+                Imp->numero_pedine+= valore;
+                if (Imp->numero_pedine > (Perimetro_Quadrato(Imp->grandezza_campo)*Imp->grandezza_campo)/Imp->numero_giocatori) Imp->numero_pedine = Imp->grandezza_campo;
+                if (Imp->numero_pedine < Imp->grandezza_campo) Imp->numero_pedine = (Perimetro_Quadrato(Imp->grandezza_campo)*Imp->grandezza_campo)/Imp->numero_giocatori;
+                break;
+            case 5:
+                Imp->giocatore_iniziale+= valore;
+                if (Imp->giocatore_iniziale < 0) Imp->giocatore_iniziale = Imp->numero_giocatori;
+                if (Imp->giocatore_iniziale > Imp->numero_giocatori) Imp->giocatore_iniziale = 0;
+                break;
         }
     }
     //impostazioni giocatori
@@ -2946,19 +3033,19 @@ int Cambia_Impostazione(impostazioni * Imp, int indice, int valore)
         indice %=3;
         switch (indice)
         {
-        case 0:
-            if (!valore) Leggi_Valore_Stringa(puntatore_giocatore->nome_giocatore);
-            break;
-        case 1:
-            puntatore_giocatore->tipo_pedine+=valore;
-            if (puntatore_giocatore->tipo_pedine >= 16) puntatore_giocatore->tipo_pedine = 0;
-            if (puntatore_giocatore->tipo_pedine < 0) puntatore_giocatore->tipo_pedine = 15;
-            break;
-        case 2:
-            puntatore_giocatore->colore_pedine+=valore;
-            if (puntatore_giocatore->colore_pedine >= 16) puntatore_giocatore->colore_pedine = 0;
-            if (puntatore_giocatore->colore_pedine < 0) puntatore_giocatore->colore_pedine = 15;
-            break;
+            case 0:
+                if (!valore) Leggi_Valore_Stringa(puntatore_giocatore->nome_giocatore);
+                break;
+            case 1:
+                puntatore_giocatore->tipo_pedine+=valore;
+                if (puntatore_giocatore->tipo_pedine >= 16) puntatore_giocatore->tipo_pedine = 0;
+                if (puntatore_giocatore->tipo_pedine < 0) puntatore_giocatore->tipo_pedine = 15;
+                break;
+            case 2:
+                puntatore_giocatore->colore_pedine+=valore;
+                if (puntatore_giocatore->colore_pedine >= 16) puntatore_giocatore->colore_pedine = 0;
+                if (puntatore_giocatore->colore_pedine < 0) puntatore_giocatore->colore_pedine = 15;
+                break;
         }
 
     }
@@ -2968,84 +3055,84 @@ int Cambia_Impostazione(impostazioni * Imp, int indice, int valore)
         indice -= 6+3*Imp->numero_giocatori;
         switch (indice)
         {
-        case 2:
-            Imp->colore_campo+=valore;
-            if (Imp->colore_campo >= 16) Imp->colore_campo = 0;
-            if (Imp->colore_campo < 0) Imp->colore_campo = 15;
-            break;
-        case 3:
-            Imp->colore_linee+=valore;
-            if (Imp->colore_linee >= 16) Imp->colore_linee = 0;
-            if (Imp->colore_linee < 0) Imp->colore_linee = 15;
-            break;
-        case 4:
-            Imp->colore_selezione+=valore;
-            if (Imp->colore_selezione >= 16) Imp->colore_selezione = 0;
-            if (Imp->colore_selezione < 0) Imp->colore_selezione = 15;
-            break;
-        case 5:
-            if (!Imp->mostra_coordinate) Imp->mostra_coordinate = true;
+            case 2:
+                Imp->colore_campo+=valore;
+                if (Imp->colore_campo >= 16) Imp->colore_campo = 0;
+                if (Imp->colore_campo < 0) Imp->colore_campo = 15;
+                break;
+            case 3:
+                Imp->colore_linee+=valore;
+                if (Imp->colore_linee >= 16) Imp->colore_linee = 0;
+                if (Imp->colore_linee < 0) Imp->colore_linee = 15;
+                break;
+            case 4:
+                Imp->colore_selezione+=valore;
+                if (Imp->colore_selezione >= 16) Imp->colore_selezione = 0;
+                if (Imp->colore_selezione < 0) Imp->colore_selezione = 15;
+                break;
+            case 5:
+                if (!Imp->mostra_coordinate) Imp->mostra_coordinate = true;
                 else Imp->mostra_coordinate = false;
-            break;
-        case 6:
-            if (!Imp->mostra_pedine_fuori) Imp->mostra_pedine_fuori = true;
+                break;
+            case 6:
+                if (!Imp->mostra_pedine_fuori) Imp->mostra_pedine_fuori = true;
                 else Imp->mostra_pedine_fuori = false;
-            break;
-        case 7:
-            if (!Imp->mostra_punteggio) Imp->mostra_punteggio = true;
+                break;
+            case 7:
+                if (!Imp->mostra_punteggio) Imp->mostra_punteggio = true;
                 else Imp->mostra_punteggio = false;
-            break;
-        case 8:
-            if (!Imp->suoni) Imp->suoni = true;
+                break;
+            case 8:
+                if (!Imp->suoni) Imp->suoni = true;
                 else Imp->suoni = false;
-            break;
-        case 9:
-            Imp->suono_inserimento +=valore;
-            while (Imp->suono_inserimento>=16) Imp->suono_inserimento-=16;
-            while (Imp->suono_inserimento<0) Imp->suono_inserimento+=16;
-            if (Imp->suoni) Riproduci_Suono(Imp->suono_inserimento);
-            break;
-        case 10:
-            Imp->suono_spostamento +=valore;
-            while (Imp->suono_spostamento>=16) Imp->suono_spostamento-=16;
-            while (Imp->suono_spostamento<0) Imp->suono_spostamento+=16;
-            if (Imp->suoni) Riproduci_Suono(Imp->suono_spostamento);
-            break;
-        case 11:
-            Imp->suono_mulino +=valore;
-            while (Imp->suono_mulino>=16) Imp->suono_mulino-=16;
-            while (Imp->suono_mulino<0) Imp->suono_mulino+=16;
-            if (Imp->suoni) Riproduci_Suono(Imp->suono_mulino);
-            break;
-        case 12:
-            Imp->suono_eliminazione +=valore;
-            while (Imp->suono_eliminazione>=16) Imp->suono_eliminazione-=16;
-            while (Imp->suono_eliminazione<0) Imp->suono_eliminazione+=16;
-            if (Imp->suoni) Riproduci_Suono(Imp->suono_eliminazione);
-            break;
-        case 13:
-            Imp->suono_sconfitta
-             +=valore;
-            while (Imp->suono_sconfitta>=16) Imp->suono_sconfitta-=16;
-            while (Imp->suono_sconfitta<0) Imp->suono_sconfitta+=16;
-            if (Imp->suoni) Riproduci_Suono(Imp->suono_sconfitta);
-            break;
-        case 14:
-            Imp->suono_vittoria +=valore;
-            while (Imp->suono_vittoria>=16) Imp->suono_vittoria-=16;
-            while (Imp->suono_vittoria<0) Imp->suono_vittoria+=16;
-            if (Imp->suoni) Riproduci_Suono(Imp->suono_vittoria);
-            break;
-        case 0:
-            Imp->spazio_righe+=valore;
-            if (Imp->spazio_righe>MAX_SPAZIO_RIGHE) Imp->spazio_righe = 0;
-            if (Imp->spazio_righe<0) Imp->spazio_righe = MAX_SPAZIO_RIGHE;
-            break;
-        case 1:
-            Imp->spazio_colonne+=valore;
-            if (Imp->spazio_colonne>MAX_SPAZIO_COLONNE) Imp->spazio_colonne = 0;
-            if (Imp->spazio_colonne<0) Imp->spazio_colonne = MAX_SPAZIO_COLONNE;
-            break;
+                break;
+            case 9:
+                Imp->suono_inserimento +=valore;
+                while (Imp->suono_inserimento>=16) Imp->suono_inserimento-=16;
+                while (Imp->suono_inserimento<0) Imp->suono_inserimento+=16;
+                if (Imp->suoni) Riproduci_Suono(Imp->suono_inserimento);
+                break;
+            case 10:
+                Imp->suono_spostamento +=valore;
+                while (Imp->suono_spostamento>=16) Imp->suono_spostamento-=16;
+                while (Imp->suono_spostamento<0) Imp->suono_spostamento+=16;
+                if (Imp->suoni) Riproduci_Suono(Imp->suono_spostamento);
+                break;
+            case 11:
+                Imp->suono_mulino +=valore;
+                while (Imp->suono_mulino>=16) Imp->suono_mulino-=16;
+                while (Imp->suono_mulino<0) Imp->suono_mulino+=16;
+                if (Imp->suoni) Riproduci_Suono(Imp->suono_mulino);
+                break;
+            case 12:
+                Imp->suono_eliminazione +=valore;
+                while (Imp->suono_eliminazione>=16) Imp->suono_eliminazione-=16;
+                while (Imp->suono_eliminazione<0) Imp->suono_eliminazione+=16;
+                if (Imp->suoni) Riproduci_Suono(Imp->suono_eliminazione);
+                break;
+            case 13:
+                Imp->suono_sconfitta
+                    +=valore;
+                while (Imp->suono_sconfitta>=16) Imp->suono_sconfitta-=16;
+                while (Imp->suono_sconfitta<0) Imp->suono_sconfitta+=16;
+                if (Imp->suoni) Riproduci_Suono(Imp->suono_sconfitta);
+                break;
+            case 14:
+                Imp->suono_vittoria +=valore;
+                while (Imp->suono_vittoria>=16) Imp->suono_vittoria-=16;
+                while (Imp->suono_vittoria<0) Imp->suono_vittoria+=16;
+                if (Imp->suoni) Riproduci_Suono(Imp->suono_vittoria);
+                break;
+            case 0:
+                Imp->spazio_righe+=valore;
+                if (Imp->spazio_righe>MAX_SPAZIO_RIGHE) Imp->spazio_righe = 0;
+                if (Imp->spazio_righe<0) Imp->spazio_righe = MAX_SPAZIO_RIGHE;
+                break;
+            case 1:
+                Imp->spazio_colonne+=valore;
+                if (Imp->spazio_colonne>MAX_SPAZIO_COLONNE) Imp->spazio_colonne = 0;
+                if (Imp->spazio_colonne<0) Imp->spazio_colonne = MAX_SPAZIO_COLONNE;
+                break;
         }
     }
     else errore=ERR_IMP_INESISTENTE;
@@ -3073,9 +3160,9 @@ void Leggi_Valore_Stringa(char * valore)
     {
         c=getch();
         /* blocca i tasti come F1-F12 e le frecce
-        che inserirebbero falsi caratteri in quanto
-        vengono letti come 0 e 224 seguiti da un altro
-        carattere */
+           che inserirebbero falsi caratteri in quanto
+           vengono letti come 0 e 224 seguiti da un altro
+           carattere */
         if (c==0 || c==224)
         {
             getch();
@@ -3087,12 +3174,12 @@ void Leggi_Valore_Stringa(char * valore)
         {
             //escludi i caratteri non accettati da Windows per i percorsi file
             if (c!='\\' && c!= '/' && c!='*' && c!=':' && c!='"' && c!='?' && c!='<' && c!='>' && c!='|' && c!='.')
-            if (strlen(temp)<SHORT_STRING-1)
-            {
-                temp[strlen(temp)+1] = '\0';
-                temp[strlen(temp)] = c;
-                putchar(c);
-            }
+                if (strlen(temp)<SHORT_STRING-1)
+                {
+                    temp[strlen(temp)+1] = '\0';
+                    temp[strlen(temp)] = c;
+                    putchar(c);
+                }
         }
         //Backspace
         if (c==8 && strlen(temp)>0)
@@ -3112,11 +3199,11 @@ void Leggi_Valore_Stringa(char * valore)
 int Cambia_Impostazioni_Giocatori(impostazioni * Imp)
 {
     /**
-    Restituisce:
-    0:  i giocatori corrispondono alla lista
-    1:  sono stati aggiunti giocatori alla lista
-    -1: sono stati tolti giocatori alla lista
-    **/
+Restituisce:
+0:  i giocatori corrispondono alla lista
+1:  sono stati aggiunti giocatori alla lista
+-1: sono stati tolti giocatori alla lista
+     **/
 
     impostazioni_giocatore * puntatore, * da_cancellare;
     int i=0;
@@ -3203,54 +3290,54 @@ void Colore_To_String(short_string stringa, int colore)
 {
     switch (colore)
     {
-    case 0:
-        strcpy(stringa, "black");
-        break;
-    case 1:
-        strcpy(stringa, "blu");
-        break;
-    case 2:
-        strcpy(stringa,"green");
-        break;
-    case 3:
-        strcpy(stringa,"aqua");
-        break;
-    case 4:
-        strcpy(stringa,"red");
-        break;
-    case 5:
-        strcpy(stringa,"purple");
-        break;
-    case 6:
-        strcpy(stringa,"yellow");
-        break;
-    case 7:
-        strcpy(stringa,"white");
-        break;
-    case 8:
-        strcpy(stringa,"gray");
-        break;
-    case 9:
-        strcpy(stringa, "light blu");
-        break;
-    case 10:
-        strcpy(stringa,"light green");
-        break;
-    case 11:
-        strcpy(stringa,"light aqua");
-        break;
-    case 12:
-        strcpy(stringa,"light red");
-        break;
-    case 13:
-        strcpy(stringa,"light purple");
-        break;
-    case 14:
-        strcpy(stringa,"light yellow");
-        break;
-    case 15:
-        strcpy(stringa,"bright white");
-        break;
+        case 0:
+            strcpy(stringa, "black");
+            break;
+        case 1:
+            strcpy(stringa, "blu");
+            break;
+        case 2:
+            strcpy(stringa,"green");
+            break;
+        case 3:
+            strcpy(stringa,"aqua");
+            break;
+        case 4:
+            strcpy(stringa,"red");
+            break;
+        case 5:
+            strcpy(stringa,"purple");
+            break;
+        case 6:
+            strcpy(stringa,"yellow");
+            break;
+        case 7:
+            strcpy(stringa,"white");
+            break;
+        case 8:
+            strcpy(stringa,"gray");
+            break;
+        case 9:
+            strcpy(stringa, "light blu");
+            break;
+        case 10:
+            strcpy(stringa,"light green");
+            break;
+        case 11:
+            strcpy(stringa,"light aqua");
+            break;
+        case 12:
+            strcpy(stringa,"light red");
+            break;
+        case 13:
+            strcpy(stringa,"light purple");
+            break;
+        case 14:
+            strcpy(stringa,"light yellow");
+            break;
+        case 15:
+            strcpy(stringa,"bright white");
+            break;
     }
 }
 
@@ -3260,54 +3347,54 @@ char Pedina_To_Char(int pedina)
     //☺,☻,♥,♦,♣,♠,♂,♀,♪,♫,☼,$,®,©,X,Y
     switch (pedina)
     {
-    case 0:
-        carattere = 1; //☺
-        break;
-    case 1:
-        carattere = 2; //☻
-        break;
-    case 2:
-        carattere = 3; //♥
-        break;
-    case 3:
-        carattere = 4; //♦
-        break;
-    case 4:
-        carattere = 5; //♣
-        break;
-    case 5:
-        carattere = 6; //♠
-        break;
-    case 6:
-        carattere = 11; //♂
-        break;
-    case 7:
-        carattere = 12; //♀
-        break;
-    case 8:
-        carattere = 190; //¥
-        break;
-    case 9:
-        carattere = 14; //♫
-        break;
-    case 10:
-        carattere = 15; //☼
-        break;
-    case 11:
-        carattere = '$';
-        break;
-    case 12:
-        carattere = 156; //£
-        break;
-    case 13:
-        carattere = 184; //©
-        break;
-    case 14:
-        carattere = 'X';
-        break;
-    case 15:
-        carattere = 'Y';
-        break;
+        case 0:
+            carattere = 1; //☺
+            break;
+        case 1:
+            carattere = 2; //☻
+            break;
+        case 2:
+            carattere = 3; //♥
+            break;
+        case 3:
+            carattere = 4; //♦
+            break;
+        case 4:
+            carattere = 5; //♣
+            break;
+        case 5:
+            carattere = 6; //♠
+            break;
+        case 6:
+            carattere = 11; //♂
+            break;
+        case 7:
+            carattere = 12; //♀
+            break;
+        case 8:
+            carattere = 190; //¥
+            break;
+        case 9:
+            carattere = 14; //♫
+            break;
+        case 10:
+            carattere = 15; //☼
+            break;
+        case 11:
+            carattere = '$';
+            break;
+        case 12:
+            carattere = 156; //£
+            break;
+        case 13:
+            carattere = 184; //©
+            break;
+        case 14:
+            carattere = 'X';
+            break;
+        case 15:
+            carattere = 'Y';
+            break;
     }
     return carattere;
 }
@@ -3363,8 +3450,8 @@ int Record()
             i=0;
             while (!feof(file_record) && i<MR_MAX)
             {
-            //legge il nome del giocatore
-            fscanf(file_record,"%s",nome);
+                //legge il nome del giocatore
+                fscanf(file_record,"%s",nome);
                 //controlla che non sia arrivato alla fine del file
                 if (!feof(file_record))
                 {
@@ -3373,18 +3460,18 @@ int Record()
                     //stampa il record con un colore diverso in base alla postazione
                     switch (i)
                     {
-                    case 0:
-                        Cambia_Colore(MR_1_COLOR,DEF_BACK_COLOR);
-                        break;
-                    case 1:
-                        Cambia_Colore(MR_2_COLOR,DEF_BACK_COLOR);
-                        break;
-                    case 2:
-                        Cambia_Colore(MR_3_COLOR,DEF_BACK_COLOR);
-                        break;
-                    default:
-                        Cambia_Colore(MR_LAST_COLOR,DEF_BACK_COLOR);
-                        break;
+                        case 0:
+                            Cambia_Colore(MR_1_COLOR,DEF_BACK_COLOR);
+                            break;
+                        case 1:
+                            Cambia_Colore(MR_2_COLOR,DEF_BACK_COLOR);
+                            break;
+                        case 2:
+                            Cambia_Colore(MR_3_COLOR,DEF_BACK_COLOR);
+                            break;
+                        default:
+                            Cambia_Colore(MR_LAST_COLOR,DEF_BACK_COLOR);
+                            break;
                     }
                     gotoxy(MR_NOME_X,MR_DIV1_Y+i+1);
                     printf("%s",nome);
@@ -3555,69 +3642,69 @@ void Gestione_Errori(int errore)
         Stampa_Cornice_Piccola(ME_COLOR);
         switch (errore)
         {
-        //Errori
-        case ERR_FILE_PARTITE_INESISTENTE:
-            sprintf(messaggio,"Nessuna partita da caricare: file %s inesistente.",FILE_PARTITE);
-            break;
-        case ERR_FILE_IMP_INESISTENTE:
-            sprintf(messaggio,"File %s inesistente. Verr\x85 ricreato con le impostazioni predefinite.",FILE_IMP);
-            break;
-        case ERR_FILE_REC_INESISTENTE:
-            sprintf(messaggio,"File %s inesistente. Nessun record da mostrare.", FILE_RECORD);
-            break;
-        case ERR_FILE_AIUTO_INESISTENTE:
-            sprintf(messaggio,"Impossibile procedere. File %s inesistente.",FILE_AIUTO);
-            break;
-        case ERR_FILE_IMP_INVALID:
-            sprintf(messaggio,"Il file %s sembra danneggiato. Verr\x85 ricreato con le impostazioni predefinite.",FILE_IMP);
-            break;
-        case ERR_IMP_INVALID:
-            strcpy(messaggio,"Le impostazioni non sono valide! Verranno ripristinate le impostazioni predefinite.");
-            break;
-        case ERR_FILE_AIUTO_VUOTO:
-            sprintf(messaggio,"Impossibile procedere. File %s vuoto.",FILE_AIUTO);
-            break;
-        case ERR_PARTITA_NON_INIZIATA:
-            strcpy(messaggio,"Nessuna partita da salvare!");
-            break;
-        case ERR_FILE_PARTITE_VUOTO:
-            sprintf(messaggio,"Nessuna partita da caricare: file %s vuoto.",FILE_PARTITE);
-            break;
-        case ERR_FILE_REC_VUOTO:
-            sprintf(messaggio,"File %s vuoto. Nessun record da mostrare.", FILE_RECORD);
-            break;
-        case ERR_FILE_IMP_VUOTO:
-            sprintf(messaggio,"Il file %s \x82 vuoto. Verr\x85 ricreato con le impostazioni predefinite.",FILE_IMP);
-            break;
-        case ERR_IMP_INESISTENTE:
-            strcpy(messaggio,"Errore! L'impostazione che si desidera cambiare \x82 inesistente!");
-            break;
-        //errori di gioco
-        case ERR_CASELLA_INESISTENTE:
-            strcpy(messaggio,"Errore! Casella inesistente!");
-            break;
-        case ERR_CASELLA_PIENA:
-            strcpy(messaggio,"La casella selezionata \x82 gi\x85 occupata!");
-            break;
-        case ERR_CASELLA_VUOTA:
-            strcpy(messaggio,"La casella selezionata \x82 vuota!");
-            break;
-        case ERR_CASELLE_NON_ADIACENTI:
-            strcpy(messaggio,"Le caselle scelte non sono adiacenti!");
-            break;
-        case ERR_PEDINA_AVVERSARIA:
-            strcpy(messaggio,"La pedina selezionata appartiene ad un avversario!");
-            break;
-        case ERR_PEDINA_GIOCATORE_TURNO:
-            strcpy(messaggio,"La pedina selezionata non appartiene ad un avversario!");
-            break;
-        case ERR_INTERROTTA:
-            strcpy(messaggio,"Partita interrotta dall'utente. Se si intende riprenderla salvare la partita attuale e caricarla");
-            break;
-        case ERR_MULINO:
-            strcpy(messaggio,"Non puoi eliminare una pedina che forma un mulino se ce ne sono altre libere!");
-            break;
-        //
+            //Errori
+            case ERR_FILE_PARTITE_INESISTENTE:
+                sprintf(messaggio,"Nessuna partita da caricare: file %s inesistente.",FILE_PARTITE);
+                break;
+            case ERR_FILE_IMP_INESISTENTE:
+                sprintf(messaggio,"File %s inesistente. Verr\x85 ricreato con le impostazioni predefinite.",FILE_IMP);
+                break;
+            case ERR_FILE_REC_INESISTENTE:
+                sprintf(messaggio,"File %s inesistente. Nessun record da mostrare.", FILE_RECORD);
+                break;
+            case ERR_FILE_AIUTO_INESISTENTE:
+                sprintf(messaggio,"Impossibile procedere. File %s inesistente.",FILE_AIUTO);
+                break;
+            case ERR_FILE_IMP_INVALID:
+                sprintf(messaggio,"Il file %s sembra danneggiato. Verr\x85 ricreato con le impostazioni predefinite.",FILE_IMP);
+                break;
+            case ERR_IMP_INVALID:
+                strcpy(messaggio,"Le impostazioni non sono valide! Verranno ripristinate le impostazioni predefinite.");
+                break;
+            case ERR_FILE_AIUTO_VUOTO:
+                sprintf(messaggio,"Impossibile procedere. File %s vuoto.",FILE_AIUTO);
+                break;
+            case ERR_PARTITA_NON_INIZIATA:
+                strcpy(messaggio,"Nessuna partita da salvare!");
+                break;
+            case ERR_FILE_PARTITE_VUOTO:
+                sprintf(messaggio,"Nessuna partita da caricare: file %s vuoto.",FILE_PARTITE);
+                break;
+            case ERR_FILE_REC_VUOTO:
+                sprintf(messaggio,"File %s vuoto. Nessun record da mostrare.", FILE_RECORD);
+                break;
+            case ERR_FILE_IMP_VUOTO:
+                sprintf(messaggio,"Il file %s \x82 vuoto. Verr\x85 ricreato con le impostazioni predefinite.",FILE_IMP);
+                break;
+            case ERR_IMP_INESISTENTE:
+                strcpy(messaggio,"Errore! L'impostazione che si desidera cambiare \x82 inesistente!");
+                break;
+                //errori di gioco
+            case ERR_CASELLA_INESISTENTE:
+                strcpy(messaggio,"Errore! Casella inesistente!");
+                break;
+            case ERR_CASELLA_PIENA:
+                strcpy(messaggio,"La casella selezionata \x82 gi\x85 occupata!");
+                break;
+            case ERR_CASELLA_VUOTA:
+                strcpy(messaggio,"La casella selezionata \x82 vuota!");
+                break;
+            case ERR_CASELLE_NON_ADIACENTI:
+                strcpy(messaggio,"Le caselle scelte non sono adiacenti!");
+                break;
+            case ERR_PEDINA_AVVERSARIA:
+                strcpy(messaggio,"La pedina selezionata appartiene ad un avversario!");
+                break;
+            case ERR_PEDINA_GIOCATORE_TURNO:
+                strcpy(messaggio,"La pedina selezionata non appartiene ad un avversario!");
+                break;
+            case ERR_INTERROTTA:
+                strcpy(messaggio,"Partita interrotta dall'utente. Se si intende riprenderla salvare la partita attuale e caricarla");
+                break;
+            case ERR_MULINO:
+                strcpy(messaggio,"Non puoi eliminare una pedina che forma un mulino se ce ne sono altre libere!");
+                break;
+                //
         }
         strcat(messaggio, "\nPremere un tasto per continuare.");
 
