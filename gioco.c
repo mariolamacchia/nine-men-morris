@@ -40,7 +40,7 @@ void Inizializza_Gioco(partita * Partita, impostazioni * Imp)
     FILE * file_impostazioni;
     impostazioni_giocatore * puntatore;
 
-    Cursore_Visibile(false);
+    Cursore_Visibile(False);
     Cambia_Sfondo(BACK_COLOR,DEF_BACK_COLOR);
 
     //Carica impostazioni
@@ -123,7 +123,7 @@ void Inizializza_Gioco(partita * Partita, impostazioni * Imp)
 
 
     //Segna partita come non iniziata
-    Partita->iniziata = false;
+    Partita->iniziata = False;
     Partita->giocatori = NULL;
 }
 
@@ -592,8 +592,8 @@ booleano Messaggio(char * messaggio, booleano conferma)
     //libera spazio
     free(temp);
 
-    if (c=='s' || c=='S') return true;
-    else return false;
+    if (c=='s' || c=='S') return True;
+    else return False;
 }
 
 void Stampa_Menu(int cursore)
@@ -665,7 +665,7 @@ void Stampa_Menu(int cursore)
     if (cursore > 2) spostamento_cursore++;
     if (cursore == 6) spostamento_cursore++;
 
-    Stampa_Cursore(cursore+spostamento_cursore,MP_COLOR,true);
+    Stampa_Cursore(cursore+spostamento_cursore,MP_COLOR,True);
 
     i=0;
 
@@ -814,7 +814,7 @@ int Controlla_Impostazioni (impostazioni Imp)
     {
         err_colori = 1;
     }
-    if ((Imp.suoni == true) &&
+    if ((Imp.suoni == True) &&
          ((Imp.suono_eliminazione < 0 || Imp.suono_eliminazione > 15) ||
           (Imp.suono_inserimento < 0 || Imp.suono_inserimento > 15) ||
           (Imp.suono_mulino < 0 || Imp.suono_mulino > 15) ||
@@ -878,8 +878,8 @@ void Inizializza_Partita(impostazioni Imp, partita * Partita)
     //carica impostazioni
     Partita->campo.grandezza =  Imp.grandezza_campo;
     Crea_Campo(&Partita->campo, Imp.grandezza_campo);
-    Partita->iniziata = true;
-    Partita->mulino = false;
+    Partita->iniziata = True;
+    Partita->mulino = False;
     if (Imp.giocatore_iniziale) Partita->turno = Imp.giocatore_iniziale;
     else Partita->turno = rand()%Imp.numero_giocatori+1;
     strcpy(Partita->nome,Imp.nome_partita);
@@ -890,7 +890,7 @@ void Inizializza_Partita(impostazioni Imp, partita * Partita)
     puntatore_gioc = Partita->giocatori;
     while (puntatore_imp!=NULL)
     {
-        puntatore_gioc->in_gioco = true;
+        puntatore_gioc->in_gioco = True;
         puntatore_gioc->punteggio = 0;
         puntatore_gioc->colore_pedine = puntatore_imp->colore_pedine;
         strcpy(puntatore_gioc->nome_giocatore,puntatore_imp->nome_giocatore);
@@ -1528,7 +1528,7 @@ void Setta_Valore(casella_selezionata Casella, campo Campo, casella valore)
 
 booleano Stessa_Linea(casella_selezionata Casella1, casella_selezionata Casella2, campo Campo)
 {
-    booleano risultato = false;
+    booleano risultato = False;
     if (Casella1.x == Casella2.x)
     {
         //si trovano nelle prime righe
@@ -1537,19 +1537,19 @@ booleano Stessa_Linea(casella_selezionata Casella1, casella_selezionata Casella2
                 Casella1.y < Lato_Campo(Campo.grandezza)-Casella1.x &&
                 Casella2.y >= Casella1.x &&
                 Casella2.y < Lato_Campo(Campo.grandezza)-Casella1.x)
-            risultato = true;
+            risultato = True;
         //si trovano nelle ultime righe
         if (Casella1.x >= Campo.grandezza*2-2 &&
                 Casella1.y <= Casella1.x &&
                 Casella1.y >= Campo.grandezza*3-3-Casella1.x &&
                 Casella2.y <= Casella1.x &&
                 Casella2.y >= Campo.grandezza*3-3-Casella1.x)
-            risultato = true;
+            risultato = True;
         //si trovano nelle righe centrali
         if (Casella1.x==Lato_Campo(Campo.grandezza)/2 &&
                 ((Casella1.y<=Campo.grandezza && Casella2.y<=Campo.grandezza)||
                  (Casella1.y>=Campo.grandezza*2-2 && Casella2.y>=Campo.grandezza*2-2)))
-            risultato = true;
+            risultato = True;
     }
     else if (Casella1.y == Casella2.y)
     {
@@ -1559,27 +1559,27 @@ booleano Stessa_Linea(casella_selezionata Casella1, casella_selezionata Casella2
                 Casella1.x < Lato_Campo(Campo.grandezza)-Casella1.y &&
                 Casella2.x >= Casella1.y &&
                 Casella2.x < Lato_Campo(Campo.grandezza)-Casella1.y)
-            risultato = true;
+            risultato = True;
         //si trovano nelle ultime righe
         if (Casella1.y >= Campo.grandezza*2-2 &&
                 Casella1.x <= Casella1.y &&
                 Casella1.x >= Lato_Campo(Campo.grandezza)-1-Casella1.y &&
                 Casella2.x <= Casella1.y &&
                 Casella2.x >= Lato_Campo(Campo.grandezza)-1-Casella1.y)
-            risultato = true;
+            risultato = True;
         //si trovano nelle righe centrali
         if (Casella1.y==Lato_Campo(Campo.grandezza)/2 &&
                 ((Casella1.x<=Campo.grandezza && Casella2.x<=Campo.grandezza)||
                  (Casella1.x>=Campo.grandezza*2-2 && Casella2.x>=Campo.grandezza*2-2)))
-            risultato = true;
+            risultato = True;
     }
-    else return false;
+    else return False;
     return risultato;
 }
 
 booleano Mulino (casella_selezionata Casella, campo Campo)
 {
-    booleano mulino=true;
+    booleano mulino=True;
     int pedine=1;
     casella_selezionata adiacente,controllo;
     //controlla a sx
@@ -1587,7 +1587,7 @@ booleano Mulino (casella_selezionata Casella, campo Campo)
     adiacente = Casella_Adiacente(Casella,LEFT,Campo);
     while (Stessa_Linea(adiacente,Casella,Campo) && mulino && !Stessa_Casella(controllo,adiacente))
     {
-        if (Valore_Casella(adiacente,Campo)!=Valore_Casella(Casella,Campo)) mulino = false;
+        if (Valore_Casella(adiacente,Campo)!=Valore_Casella(Casella,Campo)) mulino = False;
         else
         {
             controllo = adiacente;
@@ -1603,7 +1603,7 @@ booleano Mulino (casella_selezionata Casella, campo Campo)
     }
     while (Stessa_Linea(adiacente,Casella,Campo) && mulino && !Stessa_Casella(controllo,adiacente))
     {
-        if (Valore_Casella(adiacente,Campo)!=Valore_Casella(Casella,Campo)) mulino = false;
+        if (Valore_Casella(adiacente,Campo)!=Valore_Casella(Casella,Campo)) mulino = False;
         else
         {
             controllo = adiacente;
@@ -1613,14 +1613,14 @@ booleano Mulino (casella_selezionata Casella, campo Campo)
     }
     if (!mulino || pedine<Campo.grandezza)
     {
-        mulino = true;
+        mulino = True;
         pedine=1;
         //su
         controllo = Casella;
         adiacente = Casella_Adiacente(Casella,UP,Campo);
         while (Stessa_Linea(Casella,adiacente,Campo) && mulino && !Stessa_Casella(controllo,adiacente))
         {
-            if (Valore_Casella(adiacente,Campo)!=Valore_Casella(Casella,Campo)) mulino = false;
+            if (Valore_Casella(adiacente,Campo)!=Valore_Casella(Casella,Campo)) mulino = False;
             else
             {
                 controllo = adiacente;
@@ -1636,7 +1636,7 @@ booleano Mulino (casella_selezionata Casella, campo Campo)
         }
         while (Stessa_Linea(Casella,adiacente,Campo) && mulino && !Stessa_Casella(controllo,adiacente))
         {
-            if (Valore_Casella(adiacente,Campo)!=Valore_Casella(Casella,Campo)) mulino = false;
+            if (Valore_Casella(adiacente,Campo)!=Valore_Casella(Casella,Campo)) mulino = False;
             else
             {
                 controllo = adiacente;
@@ -1647,15 +1647,15 @@ booleano Mulino (casella_selezionata Casella, campo Campo)
     }
     if (mulino && pedine==Campo.grandezza)
     {
-        return true;
+        return True;
     }
-    else return false;
+    else return False;
 }
 
 booleano Stessa_Casella (casella_selezionata Casella1, casella_selezionata Casella2)
 {
-    if (Casella1.x == Casella2.x && Casella1.y == Casella2.y) return true;
-    else return false;
+    if (Casella1.x == Casella2.x && Casella1.y == Casella2.y) return True;
+    else return False;
 }
 
 booleano Adiacente (casella_selezionata Casella1, casella_selezionata Casella2, campo Campo)
@@ -1665,8 +1665,8 @@ booleano Adiacente (casella_selezionata Casella1, casella_selezionata Casella2, 
              Stessa_Casella(Casella_Adiacente(Casella1,DOWN,Campo),Casella2) ||
              Stessa_Casella(Casella_Adiacente(Casella1,LEFT,Campo),Casella2) ||
              Stessa_Casella(Casella_Adiacente(Casella1,RIGHT,Campo),Casella2)))
-        return true;
-    else return false;
+        return True;
+    else return False;
 }
 
 int Inserisci_Pedina (casella_selezionata Casella, partita * Partita)
@@ -1840,7 +1840,7 @@ int Gioca(partita * Partita, impostazioni Imp)
             else
             {
                 if (Imp.suoni) Riproduci_Suono(Imp.suono_sconfitta);
-                Messaggio("Non c'\x82 nessun vincitore.",false);
+                Messaggio("Non c'\x82 nessun vincitore.",False);
             }
         }
     }
@@ -1863,8 +1863,8 @@ int Fase_Posizionamento (partita * Partita, impostazioni Imp)
     for (i=1; i<Partita->turno;i++)
         giocatore_di_turno = giocatore_di_turno->prossimo;
     cursore = Casella_Selezionata(0,0);
-    ok=false;
-    esci = false;
+    ok=False;
+    esci = False;
     Crea_Buffer_Campo(&Campo,Partita->campo,Imp.spazio_righe,Imp.spazio_colonne);
 
     while ((giocatore_di_turno->pedine_da_inserire>0 ||Partita->mulino) && !esci)
@@ -1889,13 +1889,13 @@ int Fase_Posizionamento (partita * Partita, impostazioni Imp)
                     {
                         //inserisce la pedina
                         Inserisci_Pedina(cursore,Partita);
-                        ok=true;
+                        ok=True;
                         //controlla se si è formato un mulino
                         if (Mulino(cursore,Partita->campo))
                         {
                             //riproduce il suono e passa alla sottofase di mulino
                             if (Imp.suoni) Riproduci_Suono(Imp.suono_mulino);
-                            Partita->mulino=true;
+                            Partita->mulino=True;
                         }
                         else
                         {
@@ -1920,25 +1920,25 @@ int Fase_Posizionamento (partita * Partita, impostazioni Imp)
                         if (Mulino(cursore,Partita->campo))
                         {
                             //se la pedina è in un mulino controlla che non ce ne siano altre che non ne compongano
-                            elimina = true;
+                            elimina = True;
                             for (i=0;i<Lato_Campo(Partita->campo.grandezza) && elimina;i++)
                                 for (j=0;j<Lato_Campo(Partita->campo.grandezza) && elimina; j++)
                                 {
                                     if (Valore_Casella(Casella_Selezionata(j,i),Partita->campo) == valore)
                                         if (!Mulino(Casella_Selezionata(j,i),Partita->campo))
-                                            elimina = false;
+                                            elimina = False;
                                 }
                         }
-                        else elimina = true;
+                        else elimina = True;
 
                         if (elimina)
                         {
                             //elimina la pedina, passa il turno e riproduce il suono
                             Elimina_Pedina(cursore,Partita);
                             if (Imp.suoni) Riproduci_Suono(Imp.suono_eliminazione);
-                            ok=true;
+                            ok=True;
                             giocatore_di_turno = Prossimo_Turno(Partita);
-                            Partita->mulino = false;
+                            Partita->mulino = False;
                             Crea_Buffer_Campo(&Campo,Partita->campo,Imp.spazio_righe,Imp.spazio_colonne);
                         }
                         else Gestione_Errori(ERR_MULINO);
@@ -1947,9 +1947,9 @@ int Fase_Posizionamento (partita * Partita, impostazioni Imp)
             }
             //se si preme esc esce dopo aver chiesto conferma
             else if (scelta==0)
-                if (Messaggio("Sicuro di voler tornare al menu principale?",true)) esci = true;
+                if (Messaggio("Sicuro di voler tornare al menu principale?",True)) esci = True;
         }
-        ok = false;
+        ok = False;
     }
     if (esci) return ERR_INTERROTTA;
     else return 0;
@@ -1977,8 +1977,8 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
             Riproduci_Suono(Imp.suono_sconfitta);
             strcpy(messaggio, puntatore->nome_giocatore);
             strcat(messaggio, " \x82 stato eliminato.");
-            Messaggio(messaggio,false);
-            puntatore->in_gioco = false;
+            Messaggio(messaggio,False);
+            puntatore->in_gioco = False;
         }
         puntatore = puntatore->prossimo;
     }
@@ -1987,9 +1987,9 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
     for (i=1; i<Partita->turno;i++)
         giocatore_di_turno = giocatore_di_turno->prossimo;
     cursore = Casella_Selezionata(0,0);
-    ok=false;
-    prima_casella_scelta = false;
-    esci = false;
+    ok=False;
+    prima_casella_scelta = False;
+    esci = False;
     Crea_Buffer_Campo(&Campo,Partita->campo,Imp.spazio_righe,Imp.spazio_colonne);
 
     while (!Fine_Partita(*Partita) && !esci)
@@ -2009,10 +2009,10 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
                 // se era stata selezionata una pedina, la deseleziona
                 if (prima_casella_scelta)
                 {
-                    prima_casella_scelta = false;
+                    prima_casella_scelta = False;
                 }
                 //altrimenti esce dopo aver chiesto conferma
-                else if (Messaggio("Sicuro di voler tornare al menu principale? ",true)) esci = true;
+                else if (Messaggio("Sicuro di voler tornare al menu principale? ",True)) esci = True;
             }
             //se si preme invio
             else if (scelta == 1)
@@ -2030,24 +2030,24 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
                         if (Mulino(cursore,Partita->campo))
                         {
                             //se la pedina è in un mulino controlla che non ce ne siano altre che non ne compongano
-                            elimina = true;
+                            elimina = True;
                             for (i=0;i<Lato_Campo(Partita->campo.grandezza) && elimina;i++)
                                 for (j=0;j<Lato_Campo(Partita->campo.grandezza) && elimina; j++)
                                 {
                                     if (Valore_Casella(Casella_Selezionata(j,i),Partita->campo) == Valore_Casella(cursore,Partita->campo))
                                         if (!Mulino(Casella_Selezionata(j,i),Partita->campo))
-                                            elimina = false;
+                                            elimina = False;
                                 }
                         }
-                        else elimina = true;
+                        else elimina = True;
 
                         if (elimina)
                         {
                             //la elimina, riproduce il suono e passa il turno
                             Elimina_Pedina(cursore,Partita);
                             if (Imp.suoni) Riproduci_Suono(Imp.suono_eliminazione);
-                            ok=true;
-                            Partita->mulino = false;
+                            ok=True;
+                            Partita->mulino = False;
                             giocatore_di_turno = Prossimo_Turno(Partita);
                             Crea_Buffer_Campo(&Campo,Partita->campo,Imp.spazio_righe,Imp.spazio_colonne);
                         }
@@ -2064,14 +2064,14 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
                     else
                     {
                         pedina_da_spostare = cursore;
-                        prima_casella_scelta = true;
-                        ok = true;
+                        prima_casella_scelta = True;
+                        ok = True;
                     }
                 }
                 //se era stata selezionata già una pedina, verifica che la destinazione sia valida e la sposta
                 else
                 {
-                    if (Stessa_Casella(cursore,pedina_da_spostare)) prima_casella_scelta = false;
+                    if (Stessa_Casella(cursore,pedina_da_spostare)) prima_casella_scelta = False;
                     else if (Valore_Casella(cursore,Partita->campo)!=0)
                         Gestione_Errori(ERR_CASELLA_PIENA);
                     else if (!Adiacente(cursore,pedina_da_spostare,Partita->campo)&&giocatore_di_turno->pedine_in_gioco>Partita->campo.grandezza)
@@ -2081,7 +2081,7 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
                         Sposta_Pedina(pedina_da_spostare,cursore,Partita);
                         if (Mulino(cursore,Partita->campo))
                         {
-                            Partita->mulino = true;
+                            Partita->mulino = True;
                             if (Imp.suoni) Riproduci_Suono(Imp.suono_mulino);
                         }
                         else
@@ -2089,8 +2089,8 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
                             giocatore_di_turno = Prossimo_Turno(Partita);
                             if (Imp.suoni) Riproduci_Suono(Imp.suono_spostamento);
                         }
-                        ok = true;
-                        prima_casella_scelta = false;
+                        ok = True;
+                        prima_casella_scelta = False;
                         Crea_Buffer_Campo(&Campo,Partita->campo,Imp.spazio_righe,Imp.spazio_colonne);
                     }
                 }
@@ -2102,11 +2102,11 @@ int Fase_Spostamento (partita * Partita, impostazioni Imp)
             if (Imp.suoni) Riproduci_Suono(Imp.suono_sconfitta);
             strcpy(messaggio, giocatore_di_turno->nome_giocatore);
             strcat(messaggio, " \x82 stato eliminato.");
-            Messaggio(messaggio,false);
-            giocatore_di_turno->in_gioco = false;
+            Messaggio(messaggio,False);
+            giocatore_di_turno->in_gioco = False;
             Prossimo_Turno(Partita);
         }
-        ok = false;
+        ok = False;
     }
     if (esci) return ERR_INTERROTTA;
     else return 0;
@@ -2171,7 +2171,7 @@ int Vittoria (short_string Nome, float Punteggio)
 
                 //stampa messaggio vittoria
                 strcat(messaggio, "E' stato raggiunto un nuovo record!");
-                Messaggio(messaggio,false);
+                Messaggio(messaggio,False);
 
                 //manda a record
                 Gestione_Errori(Record());
@@ -2182,7 +2182,7 @@ int Vittoria (short_string Nome, float Punteggio)
 
                 //stampa errore
                 strcat(messaggio, "Non \x82 stato raggiunto nessun record.");
-                Messaggio(messaggio, false);
+                Messaggio(messaggio, False);
             }
         }
         else
@@ -2200,7 +2200,7 @@ int Vittoria (short_string Nome, float Punteggio)
 
         //stampa messaggio vittoria
         strcat(messaggio, "E' stato raggiunto un nuovo record!");
-        Messaggio(messaggio,false);
+        Messaggio(messaggio,False);
 
         //apri la schermata record
         Gestione_Errori(Record());
@@ -2210,17 +2210,17 @@ int Vittoria (short_string Nome, float Punteggio)
 
 booleano Pedina_Bloccata(casella_selezionata Casella, campo Campo)
 {
-    booleano bloccata = true;
+    booleano bloccata = True;
     casella_selezionata vicina;
 
     vicina = Casella_Adiacente(Casella,UP,Campo);
-    if (Adiacente(vicina, Casella, Campo) && Valore_Casella(vicina,Campo)==0) bloccata = false;
+    if (Adiacente(vicina, Casella, Campo) && Valore_Casella(vicina,Campo)==0) bloccata = False;
     vicina = Casella_Adiacente(Casella,DOWN,Campo);
-    if (Adiacente(vicina, Casella, Campo) && Valore_Casella(vicina,Campo)==0) bloccata = false;
+    if (Adiacente(vicina, Casella, Campo) && Valore_Casella(vicina,Campo)==0) bloccata = False;
     vicina = Casella_Adiacente(Casella,LEFT,Campo);
-    if (Adiacente(vicina, Casella, Campo) && Valore_Casella(vicina,Campo)==0) bloccata = false;
+    if (Adiacente(vicina, Casella, Campo) && Valore_Casella(vicina,Campo)==0) bloccata = False;
     vicina = Casella_Adiacente(Casella,RIGHT,Campo);
-    if (Adiacente(vicina, Casella, Campo) && Valore_Casella(vicina,Campo)==0) bloccata = false;
+    if (Adiacente(vicina, Casella, Campo) && Valore_Casella(vicina,Campo)==0) bloccata = False;
 
     return bloccata;
 }
@@ -2236,17 +2236,17 @@ booleano Giocatore_Eliminato(partita Partita, int giocatore)
         Partita.giocatori = Partita.giocatori->prossimo;
     }
     //se le pedine sono meno del minimo è stato eliminato
-    if (Partita.giocatori->pedine_in_gioco < Partita.campo.grandezza) eliminato = true;
+    if (Partita.giocatori->pedine_in_gioco < Partita.campo.grandezza) eliminato = True;
     else
     {
         //altrimenti se tutte le pedine sono bloccate è eliminato
-        eliminato = true;
+        eliminato = True;
         for (i=0; i<Lato_Campo(Partita.campo.grandezza) && eliminato; i++)
             for (j=0; j<Lato_Campo(Partita.campo.grandezza) && eliminato;j++)
             {
                 if ((Valore_Casella((casella = Casella_Selezionata(j,i)),Partita.campo))==giocatore)
                 {
-                    if (!Pedina_Bloccata(casella,Partita.campo)) eliminato = false;
+                    if (!Pedina_Bloccata(casella,Partita.campo)) eliminato = False;
                 }
             }
     }
@@ -2267,8 +2267,8 @@ booleano Fine_Partita (partita Partita)
         puntatore = puntatore->prossimo;
         j++;
     }
-    if (i>1) return false;
-    else return true;
+    if (i>1) return False;
+    else return True;
 }
 
 
@@ -2276,7 +2276,7 @@ int Carica_Partita(partita * Partita, impostazioni Imp)
 {
     FILE * file_partite;
     int errore,cursore = 0, scelta, numero_nomi, i;
-    booleano esci=false;
+    booleano esci=False;
     lista_stringhe lista_nomi = NULL;
     partita partita_temp;
     lista_giocatori punt_gioc;
@@ -2294,7 +2294,7 @@ int Carica_Partita(partita * Partita, impostazioni Imp)
             scelta = Scelta_Menu_Lista(&cursore,numero_nomi);
             if (scelta == 0)
             {
-                esci = true;
+                esci = True;
                 //cencella indicatori pagina
                 Stampa_Indicatori_Pagina(0,0,0);
             }
@@ -2332,7 +2332,7 @@ int Carica_Partita(partita * Partita, impostazioni Imp)
                     Stampa_Indicazioni("Partita caricata con successo!\nPremere un tasto per proseguire con il gioco.");
                     getch();
                     Gioca(Partita,Imp);
-                    esci = true;
+                    esci = True;
                 }
                 else
                 {
@@ -2349,7 +2349,7 @@ int Salva_Partita(partita * Partita)
     FILE * file_partite;
     int i,cursore=0,scelta, numero_nomi, posizione_file, bytes;
     lista_stringhe lista_nomi, punt_nomi;
-    booleano esci =false, cancella;
+    booleano esci =False, cancella;
     giocatore * puntgioc;
     void * backup, * puntbackup;
     partita temp_partita;
@@ -2388,7 +2388,7 @@ int Salva_Partita(partita * Partita)
             Stampa_Titolo_Menu("SALVA PARTITA",MS_COLOR);
 
             scelta = Scelta_Menu_Lista(&cursore,numero_nomi);
-            if (scelta==0) esci = true;
+            if (scelta==0) esci = True;
             else if (scelta == numero_nomi)
             {
                 /**Salva nuova partita**/
@@ -2409,15 +2409,15 @@ int Salva_Partita(partita * Partita)
                 Stampa_Menu_Lista(cursore,lista_nomi,MS_COLOR);
                 Stampa_Indicazioni("Partita salvata con successo.\nPremere un tasto per tornare al menu principale.");
 
-                esci = true;
+                esci = True;
                 getch();
             }
             else if ((scelta>0 && scelta<numero_nomi)||(scelta>numero_nomi*3 && scelta<numero_nomi*4))
             {
                 /**Sovrascrivi o cancella**/
                 if (scelta>=numero_nomi)
-                    cancella=true;
-                else cancella = false;
+                    cancella=True;
+                else cancella = False;
                 while (scelta>=numero_nomi)
                 {
                     scelta -=numero_nomi;
@@ -2513,7 +2513,7 @@ int Salva_Partita(partita * Partita)
                     Stampa_Menu_Lista(cursore,lista_nomi,MS_COLOR);
                     Stampa_Indicazioni("Partita salvata con successo.\nPremere un tasto per tornare al menu principale.");
 
-                    esci = true;
+                    esci = True;
                     getch();
                 }
             }
@@ -2554,7 +2554,7 @@ void Stampa_Menu_Lista(int cursore, lista_stringhe lista_nomi, int colore)
         lista_nomi = lista_nomi->prossimo;
     }
 
-    Stampa_Cursore(cursore,colore,false);
+    Stampa_Cursore(cursore,colore,False);
     Cambia_Colore(DEF_COLOR,DEF_BACK_COLOR);
 }
 
@@ -2685,7 +2685,7 @@ int Impostazioni(impostazioni * Imp)
 
     Stampa_Titolo_Menu("Impostazioni",MI_COLOR);
     Stampa_Indicazioni("Premere su, gi\x97 per selezionare le opzioni, sinistra\ndestra e INVIO per cambiarle, ESC per tornare al\nmenu principale");
-    esci = false;
+    esci = False;
     while (!esci)
     {
         Crea_Lista_Impostazioni(*Imp, &lista_nomi, &lista_valori);
@@ -2693,7 +2693,7 @@ int Impostazioni(impostazioni * Imp)
         Stampa_Menu_Impostazioni(cursore,lista_nomi,lista_valori,MI_COLOR);
 
         scelta = Scelta_Menu_Lista(&cursore,numero_stringhe);
-        if (scelta == 0) esci = true;
+        if (scelta == 0) esci = True;
         if (scelta > numero_stringhe && scelta <= numero_stringhe *2) Cambia_Impostazione(Imp,cursore,1);
         if (scelta > numero_stringhe*2 && scelta <= numero_stringhe *3) Cambia_Impostazione(Imp,cursore,-1);
         if (scelta > 0 && scelta <= numero_stringhe) Cambia_Impostazione(Imp,cursore,0);
@@ -2958,7 +2958,7 @@ void Stampa_Menu_Impostazioni(int cursore, lista_stringhe lista_nomi, lista_stri
         i++;
     }
 
-    Stampa_Cursore(cursore,colore,false);
+    Stampa_Cursore(cursore,colore,False);
     Cambia_Colore(DEF_COLOR,DEF_BACK_COLOR);
 }
 
@@ -2973,7 +2973,7 @@ int Cambia_Impostazione(impostazioni * Imp, int indice, int valore)
         {
             case 0:
                 if (!valore)
-                    if (Messaggio("Ripristinare tutte le impostazioni?", true))
+                    if (Messaggio("Ripristinare tutte le impostazioni?", True))
                         Impostazioni_Predefinite(Imp);
                 break;
             case 1:
@@ -3065,20 +3065,20 @@ int Cambia_Impostazione(impostazioni * Imp, int indice, int valore)
                 if (Imp->colore_selezione < 0) Imp->colore_selezione = 15;
                 break;
             case 5:
-                if (!Imp->mostra_coordinate) Imp->mostra_coordinate = true;
-                else Imp->mostra_coordinate = false;
+                if (!Imp->mostra_coordinate) Imp->mostra_coordinate = True;
+                else Imp->mostra_coordinate = False;
                 break;
             case 6:
-                if (!Imp->mostra_pedine_fuori) Imp->mostra_pedine_fuori = true;
-                else Imp->mostra_pedine_fuori = false;
+                if (!Imp->mostra_pedine_fuori) Imp->mostra_pedine_fuori = True;
+                else Imp->mostra_pedine_fuori = False;
                 break;
             case 7:
-                if (!Imp->mostra_punteggio) Imp->mostra_punteggio = true;
-                else Imp->mostra_punteggio = false;
+                if (!Imp->mostra_punteggio) Imp->mostra_punteggio = True;
+                else Imp->mostra_punteggio = False;
                 break;
             case 8:
-                if (!Imp->suoni) Imp->suoni = true;
-                else Imp->suoni = false;
+                if (!Imp->suoni) Imp->suoni = True;
+                else Imp->suoni = False;
                 break;
             case 9:
                 Imp->suono_inserimento +=valore;
@@ -3140,7 +3140,7 @@ void Leggi_Valore_Stringa(char * valore)
     unsigned char c;
 
     //si rende visibile il cursore
-    Cursore_Visibile(true);
+    Cursore_Visibile(True);
 
     strcpy(temp,"");
     Stampa_Cornice_Piccola(ME_COLOR);
@@ -3187,7 +3187,7 @@ void Leggi_Valore_Stringa(char * valore)
     if (c==13 && strcmp(temp,"")) strcpy(valore,temp);
 
     //nascondo nuovamente il cursore
-    Cursore_Visibile(false);
+    Cursore_Visibile(False);
 }
 
 int Cambia_Impostazioni_Giocatori(impostazioni * Imp)
@@ -3264,12 +3264,12 @@ void Impostazioni_Predefinite(impostazioni * Imp)
     puntatore->prossimo = NULL;
 
     Imp->grandezza_campo = 3;
-    Imp->mostra_coordinate = false;
-    Imp->mostra_pedine_fuori = true;
-    Imp->mostra_punteggio = true;
+    Imp->mostra_coordinate = False;
+    Imp->mostra_pedine_fuori = True;
+    Imp->mostra_punteggio = True;
     strcpy(Imp->nome_partita,"Nuova Partita");
     Imp->numero_pedine = 3;
-    Imp->suoni = true;
+    Imp->suoni = True;
     Imp->suono_inserimento = 1;
     Imp->suono_mulino = 10;
     Imp->suono_spostamento = 2;
@@ -3498,7 +3498,7 @@ int Aiuto()
 {
     int posizione, pagina = 0,i, numero_righe,scelta;
     buffer_testo testo, punt;
-    booleano esci=false;
+    booleano esci=False;
     long_string riga, parola;
     unsigned char carattere;
     FILE * file_aiuto;
@@ -3596,7 +3596,7 @@ int Aiuto()
                 }
                 //aspetta gli input dell'utente
                 scelta = Scelta_Menu_Lista(&pagina,numero_righe/BUFFER_TESTO_Y+1);
-                if (!scelta) esci =true;
+                if (!scelta) esci =True;
             }
             //chiude il file
             fclose(file_aiuto);
@@ -3702,11 +3702,11 @@ void Gestione_Errori(int errore)
         }
         strcat(messaggio, "\nPremere un tasto per continuare.");
 
-        Messaggio(messaggio,false);
+        Messaggio(messaggio,False);
     }
 }
 
 booleano Esci()
 {
-    return Messaggio("Sicuro di voler uscire?", true);
+    return Messaggio("Sicuro di voler uscire?", True);
 }

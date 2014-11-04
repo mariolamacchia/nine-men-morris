@@ -8,12 +8,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <curses.h>
 #include "funzioni.h"
 
 int main()
 {
+    initscr();
     int cursore = 0, scelta;
-    booleano esci = false;
+    booleano esci = False;
     partita Partita;
     impostazioni Imp;
     Impostazioni_Predefinite(&Imp);

@@ -118,7 +118,7 @@
 #define KEY_SPAZIO 200
 //
 
-typedef enum {false, true} booleano;
+typedef enum {False, True} booleano;
 
 typedef char short_string[SHORT_STRING];
 typedef char long_string[BUFFER_X];
