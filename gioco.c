@@ -8,25 +8,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
 #include <string.h>
 #include <math.h>
 #include <time.h>
-#include <conio.h>
+#include <curses.h>
 #include "funzioni.h"
 
 void gotoxy(int x, int y)
 {
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+    printf("%c[%d;%df",0x1B,y,x); 
 }
 
 void Cambia_Colore (int colore, int sfondo)
 {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SetConsoleTextAttribute(hConsole, 16*sfondo+colore);
+    printf("\033[0;%dm\033[0;%dm", 30 + colore, 40 + sfondo);
 }
 
 void Cambia_Sfondo(int colore, int colore_sfondo)
@@ -134,11 +129,6 @@ void Inizializza_Gioco(partita * Partita, impostazioni * Imp)
 
 void Cursore_Visibile (booleano visibile)
 {
-    HANDLE consoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_CURSOR_INFO info;
-    info.dwSize = 100;
-    info.bVisible = visibile;
-    SetConsoleCursorInfo(consoleHandle, &info);
 }
 
 void Stampa_Titolo ()
@@ -403,6 +393,7 @@ void Stampa_Cursore(int cursore, int colore, booleano doppio)
 
 void Riproduci_Suono(int suono)
 {
+    /*
     switch (suono)
     {
         case 0:
@@ -505,6 +496,7 @@ void Riproduci_Suono(int suono)
             Beep(700,200);
             break;
     }
+    */
 }
 
 int Numero_Stringhe(lista_stringhe lista_elementi)
