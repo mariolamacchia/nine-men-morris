@@ -1,0 +1,6 @@
+obj/
+bin/
+partite
+*.exe
+impostazioni
+record.txt

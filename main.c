@@ -1,14 +1,7 @@
-/*
- * main.c
- *
- *  Created on: 25/lug/2013
- *      Author: utente
- */
-
-
 #include <stdio.h>
 #include <stdlib.h>
-#include "funzioni.h"
+#include "nine-men-morris.h"
+#include "errors.h"
 
 int main()
 {
